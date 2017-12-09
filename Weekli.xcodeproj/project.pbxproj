@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CAEF4221FDB86E000D52514 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAEF4211FDB86E000D52514 /* CustomCell.swift */; };
 		5E0530DD1FC4EC5900E8BC67 /* MyCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */; };
 		5E1691D11FC2465900135810 /* google-api-objectivec-client-for-rest-master in Resources */ = {isa = PBXBuildFile; fileRef = 5E1691D01FC2465900135810 /* google-api-objectivec-client-for-rest-master */; };
 		5E2E457A1FC0C142000E12CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2E45791FC0C142000E12CF /* AppDelegate.swift */; };
@@ -59,6 +60,11 @@
 		5EAEFB191FC3B6B70008F6BF /* GTLRURITemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EAEFB141FC3B6B70008F6BF /* GTLRURITemplate.m */; };
 		5EAEFB1A1FC3B6B70008F6BF /* GTLRUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EAEFB161FC3B6B70008F6BF /* GTLRUtilities.m */; };
 		5EAEFB1D1FC3B6F30008F6BF /* GTMMIMEDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EAEFB1C1FC3B6F30008F6BF /* GTMMIMEDocument.m */; };
+		5EE3116D1FD8BD1100F8BAAA /* DayObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE3116C1FD8BD1100F8BAAA /* DayObject.swift */; };
+		5EE3116F1FD8C03C00F8BAAA /* DayDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE3116E1FD8C03C00F8BAAA /* DayDictionary.swift */; };
+		70818CE8402FC0199E9B9C96 /* Pods_WeekliTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03D3EBFC6546C0D62531A04 /* Pods_WeekliTests.framework */; };
+		8A2E8E2E2C41784D274740E4 /* Pods_WeekliUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 313B55B0743FCC270906699B /* Pods_WeekliUITests.framework */; };
+		C9ED294889F1EE4F655A5591 /* Pods_Weekli.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC28278A01B80A8CF4167FE /* Pods_Weekli.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +85,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1CAEF4211FDB86E000D52514 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		313B55B0743FCC270906699B /* Pods_WeekliUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeekliUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCalendarView.swift; sourceTree = "<group>"; };
 		5E1691D01FC2465900135810 /* google-api-objectivec-client-for-rest-master */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "google-api-objectivec-client-for-rest-master"; sourceTree = SOURCE_ROOT; };
 		5E2E45761FC0C142000E12CF /* Weekli.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weekli.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,6 +193,16 @@
 		5EAEFB161FC3B6B70008F6BF /* GTLRUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTLRUtilities.m; path = "../google-api-objectivec-client-for-rest-master/Source/Utilities/GTLRUtilities.m"; sourceTree = "<group>"; };
 		5EAEFB1B1FC3B6F30008F6BF /* GTMMIMEDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMMIMEDocument.h; path = "../google-api-objectivec-client-for-rest-master/Deps/gtm-session-fetcher/Source/GTMMIMEDocument.h"; sourceTree = "<group>"; };
 		5EAEFB1C1FC3B6F30008F6BF /* GTMMIMEDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTMMIMEDocument.m; path = "../google-api-objectivec-client-for-rest-master/Deps/gtm-session-fetcher/Source/GTMMIMEDocument.m"; sourceTree = "<group>"; };
+		5EE3116C1FD8BD1100F8BAAA /* DayObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DayObject.swift; path = ../DayObject.swift; sourceTree = "<group>"; };
+		5EE3116E1FD8C03C00F8BAAA /* DayDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayDictionary.swift; sourceTree = "<group>"; };
+		6EC28278A01B80A8CF4167FE /* Pods_Weekli.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weekli.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D557D6133762EDB717105E8 /* Pods-WeekliUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeekliUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeekliUITests/Pods-WeekliUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		83F126A6E23FA542485D6354 /* Pods-Weekli.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weekli.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Weekli/Pods-Weekli.debug.xcconfig"; sourceTree = "<group>"; };
+		9A8C7C8CE80A0FF1B1E919D3 /* Pods-WeekliTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeekliTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeekliTests/Pods-WeekliTests.release.xcconfig"; sourceTree = "<group>"; };
+		9B51F14C9BAA6484C7625D59 /* Pods-Weekli.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weekli.release.xcconfig"; path = "Pods/Target Support Files/Pods-Weekli/Pods-Weekli.release.xcconfig"; sourceTree = "<group>"; };
+		9FF92D610C568BA9F306CDB8 /* Pods-WeekliTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeekliTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeekliTests/Pods-WeekliTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B03D3EBFC6546C0D62531A04 /* Pods_WeekliTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeekliTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9F19BCCD39F3F1FB4F1E765 /* Pods-WeekliUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeekliUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeekliUITests/Pods-WeekliUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +214,7 @@
 				5E2E45B21FC0C2BB000E12CF /* GoogleSignIn.framework in Frameworks */,
 				5E2E45B31FC0C2BB000E12CF /* GoogleSignInDependencies.framework in Frameworks */,
 				5E2E45AB1FC0C268000E12CF /* SafariServices.framework in Frameworks */,
+				C9ED294889F1EE4F655A5591 /* Pods_Weekli.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +222,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70818CE8402FC0199E9B9C96 /* Pods_WeekliTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,12 +230,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A2E8E2E2C41784D274740E4 /* Pods_WeekliUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		36852A96CFA9EE1FE4A30BC6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				83F126A6E23FA542485D6354 /* Pods-Weekli.debug.xcconfig */,
+				9B51F14C9BAA6484C7625D59 /* Pods-Weekli.release.xcconfig */,
+				9FF92D610C568BA9F306CDB8 /* Pods-WeekliTests.debug.xcconfig */,
+				9A8C7C8CE80A0FF1B1E919D3 /* Pods-WeekliTests.release.xcconfig */,
+				7D557D6133762EDB717105E8 /* Pods-WeekliUITests.debug.xcconfig */,
+				E9F19BCCD39F3F1FB4F1E765 /* Pods-WeekliUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		5E05321B1FC50F9100E8BC67 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,6 +350,7 @@
 				5E2E45981FC0C142000E12CF /* WeekliUITests */,
 				5E2E45771FC0C142000E12CF /* Products */,
 				5E2E45A91FC0C268000E12CF /* Frameworks */,
+				36852A96CFA9EE1FE4A30BC6 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -336,12 +371,15 @@
 				5E2E457B1FC0C142000E12CF /* ViewController.swift */,
 				5E2E457D1FC0C142000E12CF /* Main.storyboard */,
 				5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */,
+				5EE3116E1FD8C03C00F8BAAA /* DayDictionary.swift */,
+				5EE3116C1FD8BD1100F8BAAA /* DayObject.swift */,
 				5E05321B1FC50F9100E8BC67 /* Supporting Files */,
 				5E2E45801FC0C142000E12CF /* Assets.xcassets */,
 				5E2E45821FC0C142000E12CF /* LaunchScreen.storyboard */,
 				5E2E45A71FC0C192000E12CF /* GoogleService-Info.plist */,
 				5E2E45851FC0C142000E12CF /* Info.plist */,
 				5E2E45F31FC0C413000E12CF /* Weekli-Bridging-Header.h */,
+				1CAEF4211FDB86E000D52514 /* CustomCell.swift */,
 			);
 			path = Weekli;
 			sourceTree = "<group>";
@@ -372,6 +410,9 @@
 				5E2E45B01FC0C2BB000E12CF /* GoogleSignInDependencies.framework */,
 				5E2E45AC1FC0C26F000E12CF /* SystemConfiguration.framework */,
 				5E2E45AA1FC0C268000E12CF /* SafariServices.framework */,
+				6EC28278A01B80A8CF4167FE /* Pods_Weekli.framework */,
+				B03D3EBFC6546C0D62531A04 /* Pods_WeekliTests.framework */,
+				313B55B0743FCC270906699B /* Pods_WeekliUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -383,9 +424,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5E2E459E1FC0C142000E12CF /* Build configuration list for PBXNativeTarget "Weekli" */;
 			buildPhases = (
+				3FDAC87C4C72B69C5033D380 /* [CP] Check Pods Manifest.lock */,
 				5E2E45721FC0C142000E12CF /* Sources */,
 				5E2E45731FC0C142000E12CF /* Frameworks */,
 				5E2E45741FC0C142000E12CF /* Resources */,
+				88A465B7C42A98D0C94E7E60 /* [CP] Embed Pods Frameworks */,
+				9671142891892F93C7326A36 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -400,9 +444,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5E2E45A11FC0C142000E12CF /* Build configuration list for PBXNativeTarget "WeekliTests" */;
 			buildPhases = (
+				47832426820380D7BE831A25 /* [CP] Check Pods Manifest.lock */,
 				5E2E45861FC0C142000E12CF /* Sources */,
 				5E2E45871FC0C142000E12CF /* Frameworks */,
 				5E2E45881FC0C142000E12CF /* Resources */,
+				429A23A2E84C9D2E4F87AFFD /* [CP] Embed Pods Frameworks */,
+				5399BC7CCB399054068D1487 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -418,9 +465,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5E2E45A41FC0C142000E12CF /* Build configuration list for PBXNativeTarget "WeekliUITests" */;
 			buildPhases = (
+				919A3EA3249F7C210ADB241F /* [CP] Check Pods Manifest.lock */,
 				5E2E45911FC0C142000E12CF /* Sources */,
 				5E2E45921FC0C142000E12CF /* Frameworks */,
 				5E2E45931FC0C142000E12CF /* Resources */,
+				0F41F95C164BCFE58210BFCA /* [CP] Embed Pods Frameworks */,
+				849295584BF155C4218489FF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -511,6 +561,165 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0F41F95C164BCFE58210BFCA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WeekliUITests/Pods-WeekliUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3FDAC87C4C72B69C5033D380 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Weekli-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		429A23A2E84C9D2E4F87AFFD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WeekliTests/Pods-WeekliTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		47832426820380D7BE831A25 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WeekliTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5399BC7CCB399054068D1487 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WeekliTests/Pods-WeekliTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		849295584BF155C4218489FF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WeekliUITests/Pods-WeekliUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		88A465B7C42A98D0C94E7E60 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Weekli/Pods-Weekli-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/JTAppleCalendar/JTAppleCalendar.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTAppleCalendar.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Weekli/Pods-Weekli-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		919A3EA3249F7C210ADB241F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WeekliUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9671142891892F93C7326A36 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Weekli/Pods-Weekli-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Weekli/Pods-Weekli-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5E2E45721FC0C142000E12CF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -534,6 +743,7 @@
 				5E4845861FCF6A0E00262DE0 /* MDCFloatingButton+Animation.m in Sources */,
 				5E4845AE1FCF6DBB00262DE0 /* UIFont+MaterialTypography.m in Sources */,
 				5E4845901FCF6AEB00262DE0 /* MDCInkTouchController.m in Sources */,
+				5EE3116D1FD8BD1100F8BAAA /* DayObject.swift in Sources */,
 				5E4845951FCF6B0200262DE0 /* MDCInkLayer.m in Sources */,
 				5E4845841FCF6A0E00262DE0 /* MDCFlatButton.m in Sources */,
 				5EAEFB181FC3B6B70008F6BF /* GTLRFramework.m in Sources */,
@@ -541,7 +751,9 @@
 				5E4845B91FCF6F0500262DE0 /* UIApplication+AppExtensions.m in Sources */,
 				5E4845851FCF6A0E00262DE0 /* MDCFloatingButton.m in Sources */,
 				5EAEFB0C1FC3B6980008F6BF /* GTLRRuntimeCommon.m in Sources */,
+				5EE3116F1FD8C03C00F8BAAA /* DayDictionary.swift in Sources */,
 				5EAEFB1D1FC3B6F30008F6BF /* GTMMIMEDocument.m in Sources */,
+				1CAEF4221FDB86E000D52514 /* CustomCell.swift in Sources */,
 				5E0530DD1FC4EC5900E8BC67 /* MyCalendarView.swift in Sources */,
 				5E4845991FCF6B2800262DE0 /* MDCShadowElevations.m in Sources */,
 				5EAEFB0B1FC3B6980008F6BF /* GTLRQuery.m in Sources */,
@@ -705,6 +917,7 @@
 		};
 		5E2E459F1FC0C142000E12CF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 83F126A6E23FA542485D6354 /* Pods-Weekli.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -735,6 +948,7 @@
 		};
 		5E2E45A01FC0C142000E12CF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9B51F14C9BAA6484C7625D59 /* Pods-Weekli.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -764,6 +978,7 @@
 		};
 		5E2E45A21FC0C142000E12CF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9FF92D610C568BA9F306CDB8 /* Pods-WeekliTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -778,6 +993,7 @@
 		};
 		5E2E45A31FC0C142000E12CF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A8C7C8CE80A0FF1B1E919D3 /* Pods-WeekliTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -792,6 +1008,7 @@
 		};
 		5E2E45A51FC0C142000E12CF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7D557D6133762EDB717105E8 /* Pods-WeekliUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = WeekliUITests/Info.plist;
@@ -805,6 +1022,7 @@
 		};
 		5E2E45A61FC0C142000E12CF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E9F19BCCD39F3F1FB4F1E765 /* Pods-WeekliUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = WeekliUITests/Info.plist;

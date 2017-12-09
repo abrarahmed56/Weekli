@@ -1,0 +1,6 @@
+framework module Pods_WeekliTests {
+  umbrella header "Pods-WeekliTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

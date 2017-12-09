@@ -153,9 +153,9 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
     //let signInButton = GIDSignInButton()
     //let signOutButton = UIButton()
     //let output = UITextView()
-    @IBOutlet weak var infoLabel: UILabel!
-    @IBOutlet weak var output: UILabel!
-    var eventsListText: String!
+    //@IBOutlet weak var infoLabel: UILabel!
+    //@IBOutlet weak var output: UILabel!
+    var eventsList = DayDictionary()
 
     
     override func viewDidLoad() {
@@ -194,7 +194,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
             self.service.authorizer = nil
         } else {
             //self.signInButton.isHidden = true
-            self.output.isHidden = false
+            //self.output.isHidden = false
             self.service.authorizer = user.authentication.fetcherAuthorizer()
             fetchEvents()
         }
@@ -209,8 +209,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let myCalendarView = segue.destination as? MyCalendarView {
-            myCalendarView.eventsText = eventsListText
-            NSLog("set eventstext")
+            myCalendarView.eventsList = eventsList
         }
     }
 
@@ -226,15 +225,15 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
             service.executeQuery(
                 query,
                 delegate: self,
-                didFinish: #selector(displayResultWithTicket(ticket:finishedWithObject:error:)))
+                didFinish: #selector(interpretEventsFromGoogle(ticket:finishedWithObject:error:)))
         }
         else {
             
         }
     }
     
-    // Display the start dates and event summaries in the UITextView
-    func displayResultWithTicket(
+    // Store the start dates and event summaries in the dictionary
+    func interpretEventsFromGoogle(
         ticket: GTLRServiceTicket,
         finishedWithObject response : GTLRCalendar_Events,
         error : NSError?) {
@@ -244,7 +243,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
             return
         }
         
-        var outputText = ""
+        //var outputText = ""
         if let events = response.items, !events.isEmpty {
             for event in events {
                 let start = event.start!.dateTime ?? event.start!.date!
@@ -252,13 +251,29 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
                     from: start.date,
                     dateStyle: .short,
                     timeStyle: .short)
-                outputText += "\(startString) - \(event.summary!)\n"
+                eventsList.add(desc: "\(startString) - \(event.summary!)\n", dateTimeInfo: start.dateComponents)
+                /*outputText += "\(startString) - \(event.summary!)\n"
+                eventsList.append("\(startString) - \(event.summary!)\n")
+                var dayEvents = eventsDict[start.date]
+                var eventString : String
+                var eventDateComponents : DateComponents
+                var todaysEvents : (String, DateComponents)
+                if ( dayEvents == nil ) {
+                    eventString = ""
+                    eventDateComponents = start.dateComponents
+                }
+                else {
+                    eventString = dayEvents.0
+                    eventDateComponents = start.dateComponents
+                }
+                currentValString.append("\(startString) - \(event.summary!)\n")
+                eventsDict[start.date] = (currentValString, currentVal.1);*/
             }
         } else {
-            outputText = "No upcoming events found."
+            //outputText = "No upcoming events found."
         }
-        eventsListText = outputText
-        output.text = outputText
+        //eventsListText = outputText
+        //output.text = outputText
         
     }
     
@@ -278,4 +293,6 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         alert.addAction(ok)
         present(alert, animated: true, completion: nil)
     }
+    
+    
 }

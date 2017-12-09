@@ -42,9 +42,11 @@
 #if GTLR_USE_FRAMEWORK_IMPORTS
   #import <GTMSessionFetcher/GTMSessionFetcher.h>
   #import <GTMSessionFetcher/GTMSessionFetcherService.h>
+  #import <GTMSessionFetcher/GTMMIMEDocument.h>
 #else
   #import "GTMSessionFetcher.h"
   #import "GTMSessionFetcherService.h"
+  #import <GTMSessionFetcher/GTMMIMEDocument.h>
 #endif  // GTLR_USE_FRAMEWORK_IMPORTS
 
 
