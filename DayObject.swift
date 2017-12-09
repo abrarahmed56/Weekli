@@ -12,20 +12,23 @@ class DayObject: NSObject {
     var todaysDate = Date()
     var todaysEventsDateTimes : [DateComponents] = []
     var todaysEventsDescriptions : [String] = []
+    var todaysEventsTimeElapsed : [Int] = []
     private var numEvents = 0
-    func initWith(todaysEventDateTime: DateComponents, todaysEventsDescription: String) {
-        NSLog(todaysEventDateTime.description)
-        NSLog(todaysEventsDescription)
+    func initWith(todaysEventDateTime: DateComponents, todaysEventsDescription: String, todaysEventsTimes: Int) {
+        //NSLog(todaysEventDateTime.description)
+        //NSLog(todaysEventsDescription)
         todaysEventsDateTimes = [todaysEventDateTime]
         todaysEventsDescriptions = [todaysEventsDescription]
+        todaysEventsTimeElapsed = [todaysEventsTimes]
         if (todaysEventDateTime.date != nil) {
             todaysDate = todaysEventDateTime.date!
         }
         numEvents = 1
     }
-    func add(todaysEventDateTime: DateComponents, todaysEventsDescription: String) {
+    func add(todaysEventDateTime: DateComponents, todaysEventsDescription: String, todaysEventsTimes: Int) {
         todaysEventsDateTimes.append(todaysEventDateTime)
         todaysEventsDescriptions.append(todaysEventsDescription)
+        todaysEventsTimeElapsed.append(todaysEventsTimes)
         numEvents = numEvents + 1
     }
     func getNumEvents() -> Int {

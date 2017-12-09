@@ -62,21 +62,33 @@ class MyCalendarView: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         //displayEvents.text = eventsText
-        //for i in 0 ..< eventsList.size() {
-        for i in 0 ..< 1 {
+        for i in 0 ..< eventsList.size() {
+            NSLog("i: %d", i)
+        //for i in 0 ..< 1 {
             let thisDate = eventsList.get(i: i)
             for j in 0 ..< thisDate.getNumEvents() {
                 let raiseButton = MDCRaisedButton.init();
-                NSLog("hi")
-                NSLog(thisDate.getDescription(i: j))
+                //NSLog("hi")
+                //NSLog(thisDate.getDescription(i: j))
                 raiseButton.setTitle(thisDate.getDescription(i: j), for: []);
                 raiseButton.sizeToFit()
-                raiseButton.frame.origin.y = CGFloat(Float(j)*Float(raiseButton.bounds.height))
+                let timeElapsed = thisDate.todaysEventsTimeElapsed[j]
+                //NSLog("Time elapsed: %d", timeElapsed)
+                raiseButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+                raiseButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
+                raiseButton.frame = CGRect(x: 0, y: 0, width: 50, height: timeElapsed)
+                raiseButton.frame.origin.y = CGFloat(Float(j)*Float(raiseButton.bounds.height) + 20)
+                raiseButton.frame.origin.x = CGFloat(Float(i)*Float(raiseButton.bounds.width))
+                //raiseButton.frame.origin.x = CGFloat(Float(i)*10.0)
+                let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
+                //panGesture.delegate = self as! UIGestureRecognizerDelegate
+                raiseButton.addGestureRecognizer(panGesture)
+                /*raiseButton.frame.origin.y = CGFloat(Float(j)*Float(raiseButton.bounds.height))
                 raiseButton.frame.origin.x = CGFloat(Float(i)*Float(raiseButton.bounds.width))
                 let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
                 //panGesture.delegate = self as! UIGestureRecognizerDelegate
                 raiseButton.addGestureRecognizer(panGesture)
-                //raiseButton.addTarget(self, action: selector("tapped:"), for: .touchUpInside);
+                //raiseButton.addTarget(self, action: selector("tapped:"), for: .touchUpInside);*/
                 self.view.addSubview(raiseButton);
                 
             }

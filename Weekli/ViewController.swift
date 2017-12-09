@@ -251,7 +251,20 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
                     from: start.date,
                     dateStyle: .short,
                     timeStyle: .short)
-                eventsList.add(desc: "\(startString) - \(event.summary!)\n", dateTimeInfo: start.dateComponents)
+                var compos: Set<Calendar.Component> = Set<Calendar.Component>()
+                compos.insert(.second)
+                compos.insert(.minute)
+                let diff = Calendar.current.dateComponents(compos, from:start.date, to:(event.end!.dateTime?.date)!)
+                NSLog("diff minute: %d", diff.minute!)
+                NSLog("diff second: %d", diff.second ?? 0)
+                //NSLog("numseconds: %s", numSeconds.description)
+                //let timeElapsed = numHours * 60 + numMinutes
+                let timeElapsed = diff.minute!
+                //NSLog("Starting: %d, Ending: %d", (event.end?.dateTime?.dateComponents.minute)!, start.dateComponents.minute!)
+                eventsList.add(desc: /*"\(startString) - */"\(event.summary!)\n", dateTimeInfo: start.dateComponents,
+                               timeElapsed: Int(timeElapsed))
+                /*
+                eventsList.add(desc: "\(startString) - \(event.summary!)\n", dateTimeInfo: start.dateComponents)*/
                 /*outputText += "\(startString) - \(event.summary!)\n"
                 eventsList.append("\(startString) - \(event.summary!)\n")
                 var dayEvents = eventsDict[start.date]
