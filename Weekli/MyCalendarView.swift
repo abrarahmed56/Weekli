@@ -10,20 +10,53 @@ import UIKit
 import JTAppleCalendar;
 
 class MyCalendarView: UIViewController {
-    let formatter = DateFormatter()
+    let formatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = Calendar.current.timeZone
+        dateFormatter.locale = Calendar.current.locale
+        dateFormatter.dateFormat = "yyyy MM dd"
+        return dateFormatter
+    }()
 
+    @IBOutlet weak var calendarView: JTAppleCalendarView!
+    
     // If modifying these scopes, delete your previously saved credentials by
     // resetting the iOS simulator or uninstall the app.
     
     //let eventsText : NSString? = "blah"
     var eventsList = DayDictionary()
+    
+    var eventsFromTheServer: [String:String] = [:]
 
     //@IBOutlet weak var displayEvents: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
+            let serverObjects = self.getServerEvents()
+            for (date, event) in serverObjects {
+                let stringDate = self.formatter.string(from: date)
+                self.eventsFromTheServer[stringDate] = event
+            }
+            DispatchQueue.main.async {
+                self.calendarView.reloadData()
+            }
+        }
+        
+        setUpCalendarView()
+        calendarView.scrollToDate( Date() )
+        calendarView.selectDates([ Date() ])
+        
+        
         //displayEvents.text = eventsText
         // Do any additional setup after loading the view.
+        
+    }
+    
+    func setUpCalendarView() {
+        calendarView.minimumLineSpacing = 0
+        calendarView.minimumInteritemSpacing = 0
         
     }
     
@@ -90,6 +123,10 @@ class MyCalendarView: UIViewController {
         GIDSignIn.sharedInstance().signOut()
         self.dismiss(animated: true, completion: nil)
     }
+    
+    func configureCell(cell: JTAppleCell?, cellState: CellState) {
+        //cell configuration here later to shorten code
+    }
 
 
     /*
@@ -104,27 +141,84 @@ class MyCalendarView: UIViewController {
 
 }
 
-extension MyCalendarView: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource {
+extension MyCalendarView: JTAppleCalendarViewDelegate {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-        formatter.dateFormat = "yyyy MM dd"
-        formatter.timeZone = Calendar.current.timeZone
-        formatter.locale = Calendar.current.locale
         
+//        formatter.dateFormat = "yyyy MM dd"
+//        formatter.timeZone = Calendar.current.timeZone
+//        formatter.locale = Calendar.current.locale
         let startDate = formatter.date(from: "2017 01 01")!
         let endDate = formatter.date(from: "2017 12 31")!
-        let parameters = ConfigurationParameters(startDate: startDate, endDate: endDate)
+//        let parameters = ConfigurationParameters(startDate: startDate, endDate: endDate)
+        let parameters = ConfigurationParameters(startDate:startDate,
+                                                 endDate: endDate,
+                                                 numberOfRows: 1,
+                                                 /*calendar: <#T##Calendar?#>,*/
+                                                 generateInDates: .forFirstMonthOnly,
+                                                 generateOutDates: .off,
+                                                 /*firstDayOfWeek: <#T##DaysOfWeek?#>,*/
+                                                 hasStrictBoundaries: false)
         return parameters
     }
     
+    
+}
+
+extension MyCalendarView: JTAppleCalendarViewDataSource {
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
         // This function should have the same code as the cellForItemAt function
         let myCustomCell = cell as! CustomCell
         myCustomCell.dateLabel.text = cellState.text
-        // sharedFunctionToConfigureCell(myCustomCell: myCustomCell, cellState: cellState, date: date)
+        
+        if cellState.isSelected {
+            myCustomCell.selectedView.isHidden = false
+        }
+        else {
+            myCustomCell.selectedView.isHidden = true
+        }
+        
+        let todaysDate = Date()
+        let todaysDateString = formatter.string(from: todaysDate)
+        let monthDateString = formatter.string(from: cellState.date)
+        
+        if todaysDateString == monthDateString {
+            myCustomCell.dateLabel.textColor = UIColor.blue
+        } else {
+            myCustomCell.dateLabel.textColor = UIColor.white
+        }
+        
+        myCustomCell.eventDotView.isHidden = !eventsFromTheServer.contains {$0.key == formatter.string(from: cellState.date)}
     }
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
         let myCustomCell = calendar.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as! CustomCell
         self.calendar(calendar, willDisplay: myCustomCell, forItemAt: date, cellState: cellState, indexPath: indexPath)
         return myCustomCell
+    }
+    
+    func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        guard let validCell = cell as? CustomCell else { return }
+        
+        validCell.selectedView.isHidden = false
+    }
+    
+    func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        guard let validCell = cell as? CustomCell else { return }
+        
+        validCell.selectedView.isHidden = true
+    }
+}
+
+extension MyCalendarView {
+    func getServerEvents() -> [Date:String] {
+        formatter.dateFormat = "yyyy MM dd"
+        return [
+            formatter.date(from: "2017 12 07")!: "Happy Birthday",
+            formatter.date(from: "2017 12 09")!: "Suffering",
+            formatter.date(from: "2017 12 10")!: "Pain",
+            formatter.date(from: "2017 12 05")!: "Where is Abrar",
+            formatter.date(from: "2017 12 02")!: "I need him now",
+            formatter.date(from: "2017 12 01")!: "Got it",
+            
+        ]
     }
 }
