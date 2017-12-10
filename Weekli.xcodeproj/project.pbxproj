@@ -10,6 +10,7 @@
 		1CAEF4221FDB86E000D52514 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAEF4211FDB86E000D52514 /* CustomCell.swift */; };
 		5E0530DD1FC4EC5900E8BC67 /* MyCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */; };
 		5E1691D11FC2465900135810 /* google-api-objectivec-client-for-rest-master in Resources */ = {isa = PBXBuildFile; fileRef = 5E1691D01FC2465900135810 /* google-api-objectivec-client-for-rest-master */; };
+		5E20CC731FDDF1520084BD5D /* MyEventButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E20CC721FDDF1520084BD5D /* MyEventButton.swift */; };
 		5E2E457A1FC0C142000E12CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2E45791FC0C142000E12CF /* AppDelegate.swift */; };
 		5E2E457C1FC0C142000E12CF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2E457B1FC0C142000E12CF /* ViewController.swift */; };
 		5E2E457F1FC0C142000E12CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E2E457D1FC0C142000E12CF /* Main.storyboard */; };
@@ -89,6 +90,7 @@
 		313B55B0743FCC270906699B /* Pods_WeekliUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeekliUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCalendarView.swift; sourceTree = "<group>"; };
 		5E1691D01FC2465900135810 /* google-api-objectivec-client-for-rest-master */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "google-api-objectivec-client-for-rest-master"; sourceTree = SOURCE_ROOT; };
+		5E20CC721FDDF1520084BD5D /* MyEventButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyEventButton.swift; sourceTree = "<group>"; };
 		5E2E45761FC0C142000E12CF /* Weekli.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weekli.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E2E45791FC0C142000E12CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5E2E457B1FC0C142000E12CF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				5E2E457B1FC0C142000E12CF /* ViewController.swift */,
 				5E2E457D1FC0C142000E12CF /* Main.storyboard */,
 				5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */,
+				5E20CC721FDDF1520084BD5D /* MyEventButton.swift */,
 				5EE3116E1FD8C03C00F8BAAA /* DayDictionary.swift */,
 				5EE3116C1FD8BD1100F8BAAA /* DayObject.swift */,
 				5E05321B1FC50F9100E8BC67 /* Supporting Files */,
@@ -737,6 +740,7 @@
 				5E2E457A1FC0C142000E12CF /* AppDelegate.swift in Sources */,
 				5E4845AF1FCF6DBB00262DE0 /* UIFontDescriptor+MaterialTypography.m in Sources */,
 				5EAEFB171FC3B6B70008F6BF /* GTLRBase64.m in Sources */,
+				5E20CC731FDDF1520084BD5D /* MyEventButton.swift in Sources */,
 				5E4845B51FCF6DD300262DE0 /* UIFont+MaterialTypographyPrivate.m in Sources */,
 				5EAEFB0A1FC3B6980008F6BF /* GTLRObject.m in Sources */,
 				5EAEFB191FC3B6B70008F6BF /* GTLRURITemplate.m in Sources */,

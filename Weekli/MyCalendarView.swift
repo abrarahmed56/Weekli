@@ -26,7 +26,7 @@ class MyCalendarView: UIViewController {
     
     var eventsList = DayDictionary()
     var eventsFromTheServer: [String:String] = [:]
-    var buttonList: [MDCRaisedButton] = []
+    var buttonList: [MyEventButton] = []
     
 
     override func viewDidLoad() {
@@ -86,7 +86,7 @@ class MyCalendarView: UIViewController {
 //                let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
 //                raiseButton.addGestureRecognizer(panGesture)
 //                buttonList.append(raiseButton)
-//                
+//
 //                eventsListDisplay.contentSize = CGSize(width: 150, height: 1440)
 //                self.eventsListDisplay.addSubview(raiseButton)
 //            }
@@ -96,18 +96,36 @@ class MyCalendarView: UIViewController {
     
     //Button released
     func editTimeOfEvent(view: UIView) {
+        var eventEditedForButton = MyEventButton.init()
+        for i in 0 ..< buttonList.count {
+            if ( view == buttonList[i] ) {
+                eventEditedForButton = buttonList[i]
+            }
+        }
         for i in 0 ..< buttonList.count {
             let currentButton = buttonList[i]
             let topOfMovedButton = view.frame.origin.y
             let bottomOfMovedButton = view.frame.origin.y + view.bounds.height
             let topOfOtherButton = currentButton.frame.origin.y
             let bottomOfOtherButton = currentButton.frame.origin.y + currentButton.bounds.height
-            if ( view != currentButton &&
-                // Check bottom of moved button
-                (topOfMovedButton > topOfOtherButton && topOfMovedButton < bottomOfOtherButton) ||
+            if ( view != currentButton ) {
                 // Check top of moved button
-                (bottomOfMovedButton > topOfOtherButton && bottomOfMovedButton < bottomOfOtherButton ) ) {
-                print("overlapping buttons")
+                if (topOfMovedButton > topOfOtherButton && topOfMovedButton < bottomOfOtherButton) {
+                    view.frame.origin.y = bottomOfOtherButton
+                }
+                // Check bottom of moved button
+                if (bottomOfMovedButton > topOfOtherButton && bottomOfMovedButton < bottomOfOtherButton ) {
+                    let difference = bottomOfMovedButton - topOfOtherButton
+                    eventEditedForButton.frame = CGRect(x:view.frame.origin.x, y: view.frame.origin.y, width: 300, height: view.bounds.height - difference)
+                    let splitButton = MyEventButton.init()
+                    splitButton.setTitle(eventEditedForButton.titleLabel!.text, for:[])
+                    splitButton.frame = CGRect(x: 0, y:bottomOfOtherButton, width: 300, height: difference)
+                    splitButton.id = eventEditedForButton.id
+                    splitButton.primary = 0
+                    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
+                    splitButton.addGestureRecognizer(panGesture)
+                    self.eventsListDisplay.addSubview(splitButton)
+                }
             }
         }
 
@@ -124,7 +142,6 @@ class MyCalendarView: UIViewController {
             print("button released")
             if let view = recognizer.view {
                 editTimeOfEvent(view: view)
-                //print("new x, y: ", view.frame.origin.x, view.frame.origin.y)
             }
         }
         recognizer.setTranslation(CGPoint.zero, in: self.view)
@@ -157,7 +174,7 @@ class MyCalendarView: UIViewController {
         let thisDate = eventsList.get(day: day, month: month, year: year)
         if (thisDate != nil) {
         for j in 0 ..< thisDate!.getNumEvents() {
-            let raiseButton = MDCRaisedButton.init();
+            let raiseButton = MyEventButton.init();
             let hourBegin = thisDate!.todaysEventsDateTimes[j].hour
             let minuteBegin = thisDate!.todaysEventsDateTimes[j].minute
             let duration = thisDate!.todaysEventsTimeElapsed[j]
@@ -171,13 +188,13 @@ class MyCalendarView: UIViewController {
             raiseButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
             raiseButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
             raiseButton.frame = CGRect(x: 0, y: 0, width: 300, height: timeElapsed)
-            //raiseButton.frame.origin.y = CGFloat(Float(j)*Float(raiseButton.bounds.height) + 400)
             raiseButton.frame.origin.y = CGFloat(beginAtHeight)
-            //raiseButton.frame.origin.x = CGFloat(Float(i)*Float(raiseButton.bounds.width))
+            raiseButton.id = j
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
             raiseButton.addGestureRecognizer(panGesture)
+            buttonList.append(raiseButton)
+
             eventsListDisplay.contentSize = CGSize(width: 150, height: 1440)
-            //self.view.addSubview(raiseButton);
             self.eventsListDisplay.addSubview(raiseButton)
         }
         }
