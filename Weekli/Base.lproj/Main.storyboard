@@ -192,10 +192,15 @@
                                     </collectionView>
                                 </subviews>
                             </stackView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pWD-cu-Lvp">
+                                <rect key="frame" x="16" y="156" width="288" height="342"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="EventsListDisplay" destination="pWD-cu-Lvp" id="FMj-ie-ENp"/>
                         <outlet property="calendarView" destination="CV2-gu-Xvx" id="9Go-9d-oQf"/>
                     </connections>
                 </viewController>

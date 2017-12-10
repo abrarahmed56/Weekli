@@ -44,4 +44,26 @@ class DayDictionary: NSObject {
     func get(i:Int) -> DayObject {
         return dayObjects[i]
     }
+    func get(day: Int, month: Int, year: Int) -> DayObject? {
+        var currentDay = DayObject()
+        var i = 0
+        var foundDay = false
+        
+        while ( i < dayObjects.count && !foundDay ) {
+            currentDay = dayObjects[i]
+            
+            if ( currentDay.todaysDay == day &&
+                currentDay.todaysMonth == month &&
+                currentDay.todaysYear == year ) {
+                foundDay = true
+            }
+            i = i + 1
+        }
+        if ( foundDay ) {
+            return currentDay
+        }
+        else {
+            return nil
+        }
+    }
 }

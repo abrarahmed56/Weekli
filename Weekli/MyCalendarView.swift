@@ -19,6 +19,7 @@ class MyCalendarView: UIViewController {
     }()
 
     @IBOutlet weak var calendarView: JTAppleCalendarView!
+    @IBOutlet weak var eventsListDisplay: UIScrollView!
     
     // If modifying these scopes, delete your previously saved credentials by
     // resetting the iOS simulator or uninstall the app.
@@ -58,23 +59,33 @@ class MyCalendarView: UIViewController {
             let thisDate = eventsList.get(i: i)
             for j in 0 ..< thisDate.getNumEvents() {
                 let raiseButton = MDCRaisedButton.init();
-                raiseButton.setTitle(thisDate.getDescription(i: j), for: []);
+                let hourBegin = thisDate.todaysEventsDateTimes[j].hour
+                let minuteBegin = thisDate.todaysEventsDateTimes[j].minute
+                let duration = thisDate.todaysEventsTimeElapsed[j]
+                let timeOfEvent = String(format:"%02d:%02d, for %d min", hourBegin!, minuteBegin!, duration)
+                //raiseButton.setTitle(thisDate.getDescription(i: j), for: []);
+                raiseButton.setTitle(timeOfEvent, for: []);
+                
                 raiseButton.sizeToFit()
                 let timeElapsed = thisDate.todaysEventsTimeElapsed[j]
+                let beginAtHeight = hourBegin!*60 + minuteBegin!
                 raiseButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
                 raiseButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
-                raiseButton.frame = CGRect(x: 0, y: 0, width: 50, height: timeElapsed)
-                raiseButton.frame.origin.y = CGFloat(Float(j)*Float(raiseButton.bounds.height) + 20)
-                raiseButton.frame.origin.x = CGFloat(Float(i)*Float(raiseButton.bounds.width))
+                raiseButton.frame = CGRect(x: 0, y: 0, width: 300, height: timeElapsed)
+                //raiseButton.frame.origin.y = CGFloat(Float(j)*Float(raiseButton.bounds.height) + 400)
+                raiseButton.frame.origin.y = CGFloat(beginAtHeight)
+                //raiseButton.frame.origin.x = CGFloat(Float(i)*Float(raiseButton.bounds.width))
                 let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
                 raiseButton.addGestureRecognizer(panGesture)
-
-                self.view.addSubview(raiseButton);
                 
+                eventsListDisplay.contentSize = CGSize(width: 150, height: 1440)
+                //self.view.addSubview(raiseButton);
+                self.eventsListDisplay.addSubview(raiseButton)
             }
         }
         
     }
+    
     
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
@@ -97,6 +108,39 @@ class MyCalendarView: UIViewController {
     
     func configureCell(cell: JTAppleCell?, cellState: CellState) {
         //cell configuration here later to shorten code
+    }
+    
+    
+    
+    func reloadData(day: Int, month: Int, year: Int) {
+        let thisDate = eventsList.get(day: day, month: month, year: year)
+        if (thisDate != nil) {
+        for j in 0 ..< thisDate!.getNumEvents() {
+            let raiseButton = MDCRaisedButton.init();
+            let hourBegin = thisDate!.todaysEventsDateTimes[j].hour
+            let minuteBegin = thisDate!.todaysEventsDateTimes[j].minute
+            let duration = thisDate!.todaysEventsTimeElapsed[j]
+            let timeOfEvent = String(format:"%02d:%02d, for %d min", hourBegin!, minuteBegin!, duration)
+            //raiseButton.setTitle(thisDate.getDescription(i: j), for: []);
+            raiseButton.setTitle(timeOfEvent, for: []);
+            
+            raiseButton.sizeToFit()
+            let timeElapsed = thisDate!.todaysEventsTimeElapsed[j]
+            let beginAtHeight = hourBegin!*60 + minuteBegin!
+            raiseButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+            raiseButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
+            raiseButton.frame = CGRect(x: 0, y: 0, width: 300, height: timeElapsed)
+            //raiseButton.frame.origin.y = CGFloat(Float(j)*Float(raiseButton.bounds.height) + 400)
+            raiseButton.frame.origin.y = CGFloat(beginAtHeight)
+            //raiseButton.frame.origin.x = CGFloat(Float(i)*Float(raiseButton.bounds.width))
+            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
+            raiseButton.addGestureRecognizer(panGesture)
+            
+            eventsListDisplay.contentSize = CGSize(width: 150, height: 1440)
+            //self.view.addSubview(raiseButton);
+            self.eventsListDisplay.addSubview(raiseButton)
+        }
+        }
     }
 
 
@@ -166,6 +210,8 @@ extension MyCalendarView: JTAppleCalendarViewDataSource {
         guard let validCell = cell as? CustomCell else { return }
         
         validCell.selectedView.isHidden = false
+        
+        //reloadData(day: day, month: month, year: year)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
