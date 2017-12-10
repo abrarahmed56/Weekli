@@ -115,16 +115,22 @@ class MyCalendarView: UIViewController {
                 }
                 // Check bottom of moved button
                 if (bottomOfMovedButton > topOfOtherButton && bottomOfMovedButton < bottomOfOtherButton ) {
-                    let difference = bottomOfMovedButton - topOfOtherButton
-                    eventEditedForButton.frame = CGRect(x:view.frame.origin.x, y: view.frame.origin.y, width: 300, height: view.bounds.height - difference)
-                    let splitButton = MyEventButton.init()
-                    splitButton.setTitle(eventEditedForButton.titleLabel!.text, for:[])
-                    splitButton.frame = CGRect(x: 0, y:bottomOfOtherButton, width: 300, height: difference)
-                    splitButton.id = eventEditedForButton.id
-                    splitButton.primary = 0
-                    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
-                    splitButton.addGestureRecognizer(panGesture)
-                    self.eventsListDisplay.addSubview(splitButton)
+                    if ( currentButton.fixed ) {
+                        let difference = bottomOfMovedButton - topOfOtherButton
+                        eventEditedForButton.frame = CGRect(x:view.frame.origin.x, y: view.frame.origin.y, width: 300, height: view.bounds.height - difference)
+                        let splitButton = MyEventButton.init()
+                        splitButton.setTitle(eventEditedForButton.titleLabel!.text, for:[])
+                        splitButton.frame = CGRect(x: 0, y:bottomOfOtherButton, width: 300, height: difference)
+                        splitButton.id = eventEditedForButton.id
+                        splitButton.primary = false
+                        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
+                        splitButton.addGestureRecognizer(panGesture)
+                        self.eventsListDisplay.addSubview(splitButton)
+                        buttonList.append(splitButton)
+                    }
+                    else {
+                        currentButton.frame.origin.y = bottomOfMovedButton
+                    }
                 }
             }
         }

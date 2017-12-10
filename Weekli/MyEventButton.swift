@@ -10,9 +10,16 @@ import UIKit
 
 class MyEventButton: MDCRaisedButton {
 
+    // id keeps track of split events which are technically the same event
     var id : Int = 0
     
-    var primary : Int = 1
+    // primary keeps track of the first event in a split so the events stay together
+    // if a secondary block is moved, the events are separated
+    var primary : Bool = true
+    
+    // fixed blocks cannot be moved
+    // dynamic blocks are wrapped around fixed blocks
+    var fixed : Bool = false
     
     
     /*
