@@ -10,22 +10,31 @@ import UIKit
 
 class DayObject: NSObject {
     var todaysDate = Date()
+    var todaysMonth : Int = 0
+    var todaysDay : Int = 0
+    var todaysYear : Int = 0
     var todaysEventsDateTimes : [DateComponents] = []
     var todaysEventsDescriptions : [String] = []
     var todaysEventsTimeElapsed : [Int] = []
     private var numEvents = 0
-    func initWith(todaysEventDateTime: DateComponents, todaysEventsDescription: String, todaysEventsTimes: Int) {
-        //NSLog(todaysEventDateTime.description)
-        //NSLog(todaysEventsDescription)
+    func initWith(todaysEventDateTime:DateComponents, todaysEventsDescription: String, todaysEventsTimes: Int,
+                  day: Int, month: Int, year: Int, hour: Int, minute: Int) {
         todaysEventsDateTimes = [todaysEventDateTime]
         todaysEventsDescriptions = [todaysEventsDescription]
         todaysEventsTimeElapsed = [todaysEventsTimes]
         if (todaysEventDateTime.date != nil) {
             todaysDate = todaysEventDateTime.date!
         }
+        todaysMonth = month
+        todaysYear = year
+        todaysDay = day
         numEvents = 1
     }
-    func add(todaysEventDateTime: DateComponents, todaysEventsDescription: String, todaysEventsTimes: Int) {
+    func add(todaysEventDateTime: DateComponents, todaysEventsDescription: String, todaysEventsTimes: Int,
+             day: Int, month: Int, year: Int, hour: Int, minute: Int) {
+        todaysDay = day
+        todaysMonth = month
+        todaysYear = year
         todaysEventsDateTimes.append(todaysEventDateTime)
         todaysEventsDescriptions.append(todaysEventsDescription)
         todaysEventsTimeElapsed.append(todaysEventsTimes)
