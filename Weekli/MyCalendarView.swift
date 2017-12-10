@@ -109,6 +109,10 @@ class MyCalendarView: UIViewController {
             let topOfOtherButton = currentButton.frame.origin.y
             let bottomOfOtherButton = currentButton.frame.origin.y + currentButton.bounds.height
             if ( view != currentButton ) {
+                if ( eventEditedForButton.primary ) {
+                    eventEditedForButton.primary = false
+                    eventEditedForButton.id = Int(arc4random())
+                }
                 // Check top of moved button
                 if (topOfMovedButton > topOfOtherButton && topOfMovedButton < bottomOfOtherButton) {
                     view.frame.origin.y = bottomOfOtherButton
@@ -151,6 +155,10 @@ class MyCalendarView: UIViewController {
             }
         }
         recognizer.setTranslation(CGPoint.zero, in: self.view)
+    }
+    
+    @IBAction func handleTap(recognizer:UITapGestureRecognizer) {
+        print("Open menu")
     }
 
     override func didReceiveMemoryWarning() {
@@ -195,9 +203,11 @@ class MyCalendarView: UIViewController {
             raiseButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
             raiseButton.frame = CGRect(x: 0, y: 0, width: 300, height: timeElapsed)
             raiseButton.frame.origin.y = CGFloat(beginAtHeight)
-            raiseButton.id = j
+            raiseButton.id = Int(arc4random())
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
             raiseButton.addGestureRecognizer(panGesture)
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
+            raiseButton.addGestureRecognizer(tapGesture)
             buttonList.append(raiseButton)
 
             eventsListDisplay.contentSize = CGSize(width: 150, height: 1440)
