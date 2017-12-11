@@ -136,6 +136,11 @@ class MyCalendarView: UIViewController {
                         currentButton.frame.origin.y = bottomOfMovedButton
                     }
                 }
+                let hour = Int(eventEditedForButton.frame.origin.y / 60)
+                let minute = Int(eventEditedForButton.frame.origin.y) - (hour * 60)
+                let duration = Int(eventEditedForButton.bounds.height)
+                let titleLabel = String(format: "%2d:%2d, for %d min", hour, minute, duration)
+                eventEditedForButton.setTitle(titleLabel, for:[])
             }
         }
 
@@ -145,8 +150,11 @@ class MyCalendarView: UIViewController {
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
         if let view = recognizer.view {
-            view.center = CGPoint(x:view.center.x,
+            if ( view.frame.origin.y + translation.y >= 0 &&
+                 view.frame.origin.y + translation.y + view.bounds.height <= eventsListDisplay.contentSize.height) {
+                view.center = CGPoint(x:view.center.x,
                                   y:view.center.y + translation.y)
+            }
         }
         if ( recognizer.state == .ended ) {
             print("button released")

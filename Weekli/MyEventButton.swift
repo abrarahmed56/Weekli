@@ -19,7 +19,7 @@ class MyEventButton: MDCRaisedButton {
     
     // fixed blocks cannot be moved
     // dynamic blocks are wrapped around fixed blocks
-    var fixed : Bool = false
+    var fixed : Bool = true
     
     
     /*
