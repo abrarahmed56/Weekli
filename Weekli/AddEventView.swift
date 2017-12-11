@@ -42,6 +42,7 @@ class AddEventView: UIViewController {
         print(endHour!)
         print(endMinute!)
         delegate?.passEventData(controller: self, name: name!, date: date!, startHour: startHour!, startMinute: startMinute!, endHour: endHour!, endMinute: endMinute!)
+        dismiss(animated: true)
     }
     @IBAction func onDatePickerChange(_ sender: Any) {
         let dateFormatter = DateFormatter()

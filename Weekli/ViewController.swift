@@ -9,7 +9,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
+class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, myCalendarViewDelegate {
     
     
     // If modifying these scopes, delete your previously saved credentials by
@@ -31,6 +31,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         GIDSignIn.sharedInstance().scopes = scopes
         GIDSignIn.sharedInstance().signInSilently()
         
+        
     }
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
@@ -44,6 +45,17 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         }
     }
     
+    func passAddEventData(controller: MyCalendarView, name: String, date: String, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int) {
+        print("data from view controller delegate")
+        print(name)
+        print(date)
+        print(startHour)
+        print(startMinute)
+        print(endHour)
+        print(endMinute)
+        
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         let googleUser = GIDSignIn.sharedInstance().currentUser;
         if (googleUser?.authentication != nil) {
@@ -52,9 +64,18 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let myCalendarView = segue.destination as? MyCalendarView {
+        if(segue.identifier == "viewCalendar"){
+            let myCalendarView: MyCalendarView = segue.destination as! MyCalendarView
             myCalendarView.eventsList = eventsList
+            myCalendarView.delegate = self
         }
+//        if let myCalendarView = segue.destination as? MyCalendarView {
+//            myCalendarView.eventsList = eventsList
+//        }
+//        
+//        else if let addEventView = segue.destination as? AddEventView {
+//            addEventView.delegate = self
+//        }
     }
 
     // Construct a query and get a list of upcoming events from the user calendar
@@ -124,6 +145,14 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         )
         alert.addAction(ok)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func passEventData(controller: AddEventView, name: String, date: String, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int) {
+        print("event data")
+        print(name)
+        print(date)
+        print(startHour, startMinute)
+        print(endHour, endMinute)
     }
     
     
