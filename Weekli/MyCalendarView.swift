@@ -92,25 +92,48 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     }
     
     func editBlocks(button1: MyEventButton, button2: MyEventButton) {
+        /*let newHeight = originOfNextButton(button: button1) - Int(button1.frame.origin.y)
+        if ( newHeight != -1 - Int(button1.frame.origin.y) && newHeight < Int(button1.bounds.height)) {
+            let difference = Int(button1.bounds.height) - newHeight
+            button1.frame = CGRect(x: 0, y: Int(button1.frame.origin.y), width: 300, height: Int(newHeight))
+            let splitButton = MyEventButton.init()
+            splitButton.frame = CGRect(x:0, y: nextFreeSpace(button:button1), width: 300, height: Int(difference))
+            let hour = Int(button1.frame.origin.y / 60)
+            let minute = Int(button1.frame.origin.y) - (hour * 60)
+            let duration = Int(button1.bounds.height)
+            let titleLabel = String(format: "%2d:%2d, for %d min", hour, minute, duration)
+            splitButton.setTitle(titleLabel, for:[])
+            //splitButton.frame = CGRect(x: 0, y:bottomOfOtherButton, width: 300, height: difference)
+            splitButton.id = button1.id
+            splitButton.primary = false
+            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
+            splitButton.addGestureRecognizer(panGesture)
+            self.eventsListDisplay.addSubview(splitButton)
+            buttonList.append(splitButton)
+            
+        }*/
         let topOfMovedButton = button1.frame.origin.y
         let bottomOfMovedButton = button1.frame.origin.y + button1.bounds.height
         let topOfOtherButton = button2.frame.origin.y
         let bottomOfOtherButton = button2.frame.origin.y + button2.bounds.height
+        var edited = false
         // Check top of moved button                // Check top of moved button
         if (topOfMovedButton > topOfOtherButton && topOfMovedButton < bottomOfOtherButton) {
             button1.frame.origin.y = bottomOfOtherButton
         }
         // Check bottom of moved button
         else if (bottomOfMovedButton > topOfOtherButton && bottomOfMovedButton < bottomOfOtherButton ) {
+            edited = true
             if ( button2.fixed ) {
                 let difference = bottomOfMovedButton - topOfOtherButton
                 button1.frame = CGRect(x:button1.frame.origin.x, y: button1.frame.origin.y, width: 300, height: button1.bounds.height - difference)
                 let splitButton = MyEventButton.init()
+                let eventName = button1.title
                 let hour = Int(button1.frame.origin.y / 60)
                 let minute = Int(button1.frame.origin.y) - (hour * 60)
                 let duration = Int(button1.bounds.height)
-                let titleLabel = String(format: "%2d:%2d, for %d min", hour, minute, duration)
-                splitButton.setTitle(titleLabel, for:[])
+                let titleLabel = String(format: "%02d:%02d, for %d min", hour, minute, duration)
+                splitButton.setTitle(eventName + "- " + titleLabel, for:[])
                 splitButton.frame = CGRect(x: 0, y:bottomOfOtherButton, width: 300, height: difference)
                 splitButton.id = button1.id
                 splitButton.primary = false
@@ -118,6 +141,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                 splitButton.addGestureRecognizer(panGesture)
                 self.eventsListDisplay.addSubview(splitButton)
                 buttonList.append(splitButton)
+                editTimeOfEvent(view: splitButton)
             }
             else {
                 button2.frame.origin.y = bottomOfMovedButton
@@ -125,14 +149,57 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         }
             // Moved block wraps over another block
         else if (bottomOfMovedButton > bottomOfOtherButton && topOfMovedButton < topOfOtherButton ) {
+            edited = true
             button2.frame.origin.y = bottomOfMovedButton
         }
         let hour = Int(button1.frame.origin.y / 60)
         let minute = Int(button1.frame.origin.y) - (hour * 60)
         let duration = Int(button1.bounds.height)
-        let titleLabel = String(format: "%2d:%2d, for %d min", hour, minute, duration)
-        button1.setTitle(titleLabel, for:[])
-        
+        let eventName = button1.title
+        let titleLabel = String(format: "%02d:%02d, for %d min", hour, minute, duration)
+        button1.setTitle(eventName + "- " + titleLabel, for:[])
+    }
+    
+    func originOfNextButton(button: MyEventButton) -> Int {
+        var nextButtonHeight = 2400
+        for i in 0 ..< buttonList.count {
+            if ( button != buttonList[i] ) {
+                let currentButton = buttonList[i]
+                if (currentButton.frame.origin.y > button.frame.origin.y && Int(currentButton.frame.origin.y) < nextButtonHeight) {
+                    nextButtonHeight = Int(currentButton.frame.origin.y)
+                }
+            }
+        }
+        return nextButtonHeight
+
+    }
+    
+    func nextFreeSpace(button: MyEventButton) -> Int {
+        var nextFreeSpace = 2400
+        var edited = false
+        for i in 0 ..< buttonList.count {
+            if ( button != buttonList[i] ) {
+                let currentButton = buttonList[i]
+                if ( Int(currentButton.frame.origin.y + currentButton.bounds.height) <= nextFreeSpace && currentButton.frame.origin.y + currentButton.bounds.height > button.frame.origin.y + button.bounds.height) {
+                    //nextFreeSpace = Int(currentButton.frame.origin.y + currentButton.bounds.height)
+
+                /*if ( button.frame.origin.y >= currentButton.frame.origin.y && button.frame.origin.y <= (currentButton.frame.origin.y + currentButton.bounds.height) ) {*/
+                    print("edited")
+                    edited = true
+                    /*button.frame = CGRect(x: currentButton.frame.origin.x, y: currentButton.frame.origin.y + currentButton.bounds.height, width: 300, height: currentButton.bounds.height)*/
+                    nextFreeSpace = Int(currentButton.frame.origin.y + currentButton.bounds.height)
+                }
+                
+                
+                /*if ( Int( currentButton.frame.origin.y + currentButton.bounds.height ) < nextFreeSpace && currentButton.frame.origin.y > button.frame.origin.y ) {
+                    nextFreeSpace = Int(currentButton.frame.origin.y) + Int(currentButton.bounds.height)
+                }*/
+        }
+        }
+        /*if (edited) {
+            return self.nextFreeSpace(button:button)
+        }*/
+        return nextFreeSpace
     }
     
     //Button released
@@ -210,10 +277,11 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
             let hourBegin = thisDate!.todaysEventsDateTimes[j].hour
             let minuteBegin = thisDate!.todaysEventsDateTimes[j].minute
             let duration = thisDate!.todaysEventsTimeElapsed[j]
+            let eventName = thisDate!.getDescription(i: j)
             // Label displays time and duration of event, later change to show title
             let timeOfEvent = String(format:"%02d:%02d, for %d min", hourBegin!, minuteBegin!, duration)
             //raiseButton.setTitle(thisDate.getDescription(i: j), for: []);
-            raiseButton.setTitle(timeOfEvent, for: []);
+            raiseButton.setTitle(eventName + "- " + timeOfEvent, for: []);
             
             let timeElapsed = thisDate!.todaysEventsTimeElapsed[j]
             let beginAtHeight = hourBegin!*60 + minuteBegin!
@@ -222,6 +290,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
             raiseButton.frame = CGRect(x: 0, y: 0, width: 300, height: timeElapsed)
             raiseButton.frame.origin.y = CGFloat(beginAtHeight)
             raiseButton.id = Int(arc4random())
+            raiseButton.title = thisDate!.todaysEventsDescriptions[j]
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
             raiseButton.addGestureRecognizer(panGesture)
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
@@ -232,6 +301,13 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
             self.eventsListDisplay.addSubview(raiseButton)
         }
         }
+        for i in 0 ..< 24 {
+            let horizontalLine = UIView()
+            horizontalLine.backgroundColor = UIColor.black
+            horizontalLine.frame = CGRect(x: 0, y: i*60, width: 300, height: 1)
+            self.eventsListDisplay.addSubview(horizontalLine)
+        }
+
     }
 
 

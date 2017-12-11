@@ -121,7 +121,6 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
                 compos.insert(.minute)
                 let diff = Calendar.current.dateComponents(compos, from:start.date, to:(event.end!.dateTime?.date)!)
                 let timeElapsed = diff.minute!
-                
                 eventsList.add(desc: /*"\(startString) - */"\(event.summary!)\n", dateTimeInfo: start.dateComponents,
                                timeElapsed: Int(timeElapsed), day: start.dateComponents.day!, month: start.dateComponents.month!,
                                year: start.dateComponents.year!, hour: start.dateComponents.hour!, minute: start.dateComponents.minute!)

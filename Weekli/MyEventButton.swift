@@ -21,6 +21,8 @@ class MyEventButton: MDCRaisedButton {
     // dynamic blocks are wrapped around fixed blocks
     var fixed : Bool = true
     
+    var title: String = ""
+    
     
     /*
     // Only override draw() if you perform custom drawing.
