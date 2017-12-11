@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1CAEF4221FDB86E000D52514 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAEF4211FDB86E000D52514 /* CustomCell.swift */; };
+		1CE805001FDDE838006E3CC4 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE804FF1FDDE838006E3CC4 /* AddEventView.swift */; };
 		5E0530DD1FC4EC5900E8BC67 /* MyCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */; };
 		5E1691D11FC2465900135810 /* google-api-objectivec-client-for-rest-master in Resources */ = {isa = PBXBuildFile; fileRef = 5E1691D01FC2465900135810 /* google-api-objectivec-client-for-rest-master */; };
 		5E20CC731FDDF1520084BD5D /* MyEventButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E20CC721FDDF1520084BD5D /* MyEventButton.swift */; };
@@ -87,6 +88,7 @@
 
 /* Begin PBXFileReference section */
 		1CAEF4211FDB86E000D52514 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		1CE804FF1FDDE838006E3CC4 /* AddEventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
 		313B55B0743FCC270906699B /* Pods_WeekliUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeekliUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCalendarView.swift; sourceTree = "<group>"; };
 		5E1691D01FC2465900135810 /* google-api-objectivec-client-for-rest-master */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "google-api-objectivec-client-for-rest-master"; sourceTree = SOURCE_ROOT; };
@@ -372,6 +374,7 @@
 				5E2E45791FC0C142000E12CF /* AppDelegate.swift */,
 				5E2E457B1FC0C142000E12CF /* ViewController.swift */,
 				5E2E457D1FC0C142000E12CF /* Main.storyboard */,
+				1CE804FF1FDDE838006E3CC4 /* AddEventView.swift */,
 				5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */,
 				5EE3116E1FD8C03C00F8BAAA /* DayDictionary.swift */,
 				5EE3116C1FD8BD1100F8BAAA /* DayObject.swift */,
@@ -670,6 +673,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Weekli/Pods-Weekli-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleAPIClientForREST/GoogleAPIClientForREST.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/JTAppleCalendar/JTAppleCalendar.framework",
 			);
@@ -677,6 +681,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleAPIClientForREST.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTAppleCalendar.framework",
 			);
@@ -729,6 +734,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E2E457C1FC0C142000E12CF /* ViewController.swift in Sources */,
+				1CE805001FDDE838006E3CC4 /* AddEventView.swift in Sources */,
 				5E4845831FCF6A0E00262DE0 /* MDCButton.m in Sources */,
 				5EAEFAF01FC3B5BF0008F6BF /* GTLRCalendarService.m in Sources */,
 				5E4845911FCF6AEB00262DE0 /* MDCInkView.m in Sources */,

@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import JTAppleCalendar;
+import JTAppleCalendar
 
-class MyCalendarView: UIViewController {
+class MyCalendarView: UIViewController, AddEventViewDelegate {
     let formatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = Calendar.current.timeZone
@@ -20,6 +20,10 @@ class MyCalendarView: UIViewController {
 
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var eventsListDisplay: UIScrollView!
+    @IBAction func post(_ sender: Any) {
+    
+    }
+    @IBOutlet weak var barButtonPost: UIBarButtonItem!
     
     // If modifying these scopes, delete your previously saved credentials by
     // resetting the iOS simulator or uninstall the app.
@@ -55,6 +59,22 @@ class MyCalendarView: UIViewController {
         
     }
     
+    func passEventData(controller: AddEventView, name: String, date: String, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int) {
+        print("data from delegate")
+        print(name)
+        print(date)
+        print(startHour)
+        print(startMinute)
+        print(endHour)
+        print(endMinute)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let addEventView = segue.destination as! AddEventView
+        
+        addEventView.delegate = self
+        
+    }
     override func viewDidAppear(_ animated: Bool) {
         let date = Date()
         let calendar = Calendar.current
@@ -165,6 +185,14 @@ class MyCalendarView: UIViewController {
     
     func configureCell(cell: JTAppleCell?, cellState: CellState) {
         //cell configuration here later to shorten code
+    }
+    
+    func passEventData(name: String, date: String, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int) {
+        print("event data")
+        print(name)
+        print(date)
+        print(startHour, startMinute)
+        print(endHour, endMinute)
     }
     
     

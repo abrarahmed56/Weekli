@@ -56,15 +56,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0QR-xp-sHW">
-                                <rect key="frame" x="132" y="518" width="57" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Sign out"/>
-                                <connections>
-                                    <action selector="didTapSignOut:" destination="Hte-Nt-GoS" eventType="touchUpInside" id="tra-Xj-3Bj"/>
-                                    <action selector="didTapSignOut:" destination="BYZ-38-t0r" eventType="touchUpInside" id="x2I-98-zN6"/>
-                                </connections>
-                            </button>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eeh-I0-rkj">
                                 <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -196,11 +187,36 @@
                                 <rect key="frame" x="16" y="156" width="288" height="342"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </scrollView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H2z-ug-IQT">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem style="plain" id="roh-is-TdR">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0QR-xp-sHW">
+                                            <rect key="frame" x="16" y="7" width="57" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Sign out"/>
+                                            <connections>
+                                                <action selector="didTapSignOut:" destination="Hte-Nt-GoS" eventType="touchUpInside" id="tra-Xj-3Bj"/>
+                                                <action selector="didTapSignOut:" destination="BYZ-38-t0r" eventType="touchUpInside" id="x2I-98-zN6"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="m5c-zV-ZQQ"/>
+                                    <barButtonItem title="Post" id="mgO-f6-Sox">
+                                        <connections>
+                                            <action selector="post:" destination="Hte-Nt-GoS" id="tkl-qO-g8k"/>
+                                            <segue destination="vdP-8J-Sdk" kind="show" id="2ik-ge-Sdk"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="EventsListDisplay" destination="pWD-cu-Lvp" id="FMj-ie-ENp"/>
+                        <outlet property="barButtonPost" destination="mgO-f6-Sox" id="rHh-HN-YKO"/>
                         <outlet property="calendarView" destination="CV2-gu-Xvx" id="9Go-9d-oQf"/>
                     </connections>
                 </viewController>
@@ -217,6 +233,115 @@
                 </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="436.875" y="-7.394366197183099"/>
+        </scene>
+        <!--Add Event View-->
+        <scene sceneID="qAj-n3-XSO">
+            <objects>
+                <viewController id="vdP-8J-Sdk" customClass="AddEventView" customModule="Weekli" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="E7C-Y0-f0p"/>
+                        <viewControllerLayoutGuide type="bottom" id="YXQ-31-kBr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UlD-6R-dkJ" customClass="ADdeventvi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="0PW-gb-Tty">
+                                <rect key="frame" x="0.0" y="110" width="320" height="102"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <date key="date" timeIntervalSinceReferenceDate="534635653.12005401">
+                                    <!--2017-12-10 21:54:13 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="onDatePickerChange:" destination="vdP-8J-Sdk" eventType="valueChanged" id="KE4-EP-FLx"/>
+                                </connections>
+                            </datePicker>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="9qP-jq-Unn">
+                                <rect key="frame" x="0.0" y="251" width="320" height="102"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <date key="date" timeIntervalSinceReferenceDate="534635653.12005401">
+                                    <!--2017-12-10 21:54:13 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="onStartTimePickerChange:" destination="vdP-8J-Sdk" eventType="valueChanged" id="754-jF-oEN"/>
+                                </connections>
+                            </datePicker>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="k5y-tG-HJD">
+                                <rect key="frame" x="0.0" y="394" width="320" height="102"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <date key="date" timeIntervalSinceReferenceDate="534635653.12005401">
+                                    <!--2017-12-10 21:54:13 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="onEndTimePickerChange:" destination="vdP-8J-Sdk" eventType="valueChanged" id="BlL-Ni-SZO"/>
+                                </connections>
+                            </datePicker>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Tt-on-vNu">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Cancel" id="6Pn-KQ-sMl">
+                                        <connections>
+                                            <action selector="cancel:" destination="vdP-8J-Sdk" id="jBb-gm-gpB"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="3wX-wc-f3B"/>
+                                    <barButtonItem title="All Day Event" id="gRg-9V-lIc"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="OHh-BD-gfx"/>
+                                    <barButtonItem title="Okay" id="lHt-3h-iN3">
+                                        <connections>
+                                            <action selector="okay:" destination="vdP-8J-Sdk" id="nZX-WX-wBo"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vBz-IB-Ndz">
+                                <rect key="frame" x="171" y="50" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="textFieldDidChange:" destination="vdP-8J-Sdk" eventType="editingChanged" id="ORG-Ax-UHu"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b3q-x2-XRh">
+                                <rect key="frame" x="60" y="55" width="45" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Start Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Acf-ou-auc">
+                                <rect key="frame" x="120" y="222" width="80" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="End Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkb-Go-nOV">
+                                <rect key="frame" x="120" y="361" width="72" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="320" height="460"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <outlet property="datePicker" destination="0PW-gb-Tty" id="C9y-fl-4br"/>
+                        <outlet property="endTimePicker" destination="k5y-tG-HJD" id="7IB-G8-Ik3"/>
+                        <outlet property="nameTextField" destination="vBz-IB-Ndz" id="yoc-xL-Vaj"/>
+                        <outlet property="startTimePicker" destination="9qP-jq-Unn" id="75g-9h-P11"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aht-ij-B2x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1237.5" y="-7.394366197183099"/>
         </scene>
     </scenes>
 </document>

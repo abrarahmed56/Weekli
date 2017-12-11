@@ -9,6 +9,7 @@ target 'Weekli' do
 
   pod 'JTAppleCalendar', '~> 7.0'
   pod 'GoogleSignIn'
+  pod 'GoogleAPIClientForREST/Calendar', '~> 1.2.1'
 
   target 'WeekliTests' do
     inherit! :search_paths
