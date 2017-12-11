@@ -27,7 +27,7 @@ class MyCalendarView: UIViewController {
     var eventsList = DayDictionary()
     var eventsFromTheServer: [String:String] = [:]
     var buttonList: [MyEventButton] = []
-    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,34 +63,49 @@ class MyCalendarView: UIViewController {
         let month = calendar.component(.month, from:date)
         
         reloadData(day: day, month: month, year: year)
-//        for i in 0 ..< eventsList.size() {
-//            let thisDate = eventsList.get(i: i)
-//            for j in 0 ..< thisDate.getNumEvents() {
-//                let raiseButton = MDCRaisedButton.init();
-//                let hourBegin = thisDate.todaysEventsDateTimes[j].hour
-//                let minuteBegin = thisDate.todaysEventsDateTimes[j].minute
-//                let duration = thisDate.todaysEventsTimeElapsed[j]
-//                let timeOfEvent = String(format:"%02d:%02d, for %d min", hourBegin!, minuteBegin!, duration)
-//                //raiseButton.setTitle(thisDate.getDescription(i: j), for: []);
-//                raiseButton.setTitle(timeOfEvent, for: []);
-//                
-//                raiseButton.sizeToFit()
-//                let timeElapsed = thisDate.todaysEventsTimeElapsed[j]
-//                let beginAtHeight = hourBegin!*60 + minuteBegin!
-//                raiseButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
-//                raiseButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
-//                raiseButton.frame = CGRect(x: 0, y: 0, width: 300, height: timeElapsed)
-//                //raiseButton.frame.origin.y = CGFloat(Float(j)*Float(raiseButton.bounds.height) + 400)
-//                raiseButton.frame.origin.y = CGFloat(beginAtHeight)
-//                //raiseButton.frame.origin.x = CGFloat(Float(i)*Float(raiseButton.bounds.width))
-//                let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
-//                raiseButton.addGestureRecognizer(panGesture)
-//                buttonList.append(raiseButton)
-//
-//                eventsListDisplay.contentSize = CGSize(width: 150, height: 1440)
-//                self.eventsListDisplay.addSubview(raiseButton)
-//            }
-//        }
+    }
+    
+    func editBlocks(button1: MyEventButton, button2: MyEventButton) {
+        let topOfMovedButton = button1.frame.origin.y
+        let bottomOfMovedButton = button1.frame.origin.y + button1.bounds.height
+        let topOfOtherButton = button2.frame.origin.y
+        let bottomOfOtherButton = button2.frame.origin.y + button2.bounds.height
+        // Check top of moved button                // Check top of moved button
+        if (topOfMovedButton > topOfOtherButton && topOfMovedButton < bottomOfOtherButton) {
+            button1.frame.origin.y = bottomOfOtherButton
+        }
+        // Check bottom of moved button
+        else if (bottomOfMovedButton > topOfOtherButton && bottomOfMovedButton < bottomOfOtherButton ) {
+            if ( button2.fixed ) {
+                let difference = bottomOfMovedButton - topOfOtherButton
+                button1.frame = CGRect(x:button1.frame.origin.x, y: button1.frame.origin.y, width: 300, height: button1.bounds.height - difference)
+                let splitButton = MyEventButton.init()
+                let hour = Int(button1.frame.origin.y / 60)
+                let minute = Int(button1.frame.origin.y) - (hour * 60)
+                let duration = Int(button1.bounds.height)
+                let titleLabel = String(format: "%2d:%2d, for %d min", hour, minute, duration)
+                splitButton.setTitle(titleLabel, for:[])
+                splitButton.frame = CGRect(x: 0, y:bottomOfOtherButton, width: 300, height: difference)
+                splitButton.id = button1.id
+                splitButton.primary = false
+                let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
+                splitButton.addGestureRecognizer(panGesture)
+                self.eventsListDisplay.addSubview(splitButton)
+                buttonList.append(splitButton)
+            }
+            else {
+                button2.frame.origin.y = bottomOfMovedButton
+            }
+        }
+            // Moved block wraps over another block
+        else if (bottomOfMovedButton > bottomOfOtherButton && topOfMovedButton < topOfOtherButton ) {
+            button2.frame.origin.y = bottomOfMovedButton
+        }
+        let hour = Int(button1.frame.origin.y / 60)
+        let minute = Int(button1.frame.origin.y) - (hour * 60)
+        let duration = Int(button1.bounds.height)
+        let titleLabel = String(format: "%2d:%2d, for %d min", hour, minute, duration)
+        button1.setTitle(titleLabel, for:[])
         
     }
     
@@ -104,43 +119,12 @@ class MyCalendarView: UIViewController {
         }
         for i in 0 ..< buttonList.count {
             let currentButton = buttonList[i]
-            let topOfMovedButton = view.frame.origin.y
-            let bottomOfMovedButton = view.frame.origin.y + view.bounds.height
-            let topOfOtherButton = currentButton.frame.origin.y
-            let bottomOfOtherButton = currentButton.frame.origin.y + currentButton.bounds.height
             if ( view != currentButton ) {
                 if ( eventEditedForButton.primary ) {
                     eventEditedForButton.primary = false
                     eventEditedForButton.id = Int(arc4random())
                 }
-                // Check top of moved button
-                if (topOfMovedButton > topOfOtherButton && topOfMovedButton < bottomOfOtherButton) {
-                    view.frame.origin.y = bottomOfOtherButton
-                }
-                // Check bottom of moved button
-                if (bottomOfMovedButton > topOfOtherButton && bottomOfMovedButton < bottomOfOtherButton ) {
-                    if ( currentButton.fixed ) {
-                        let difference = bottomOfMovedButton - topOfOtherButton
-                        eventEditedForButton.frame = CGRect(x:view.frame.origin.x, y: view.frame.origin.y, width: 300, height: view.bounds.height - difference)
-                        let splitButton = MyEventButton.init()
-                        splitButton.setTitle(eventEditedForButton.titleLabel!.text, for:[])
-                        splitButton.frame = CGRect(x: 0, y:bottomOfOtherButton, width: 300, height: difference)
-                        splitButton.id = eventEditedForButton.id
-                        splitButton.primary = false
-                        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
-                        splitButton.addGestureRecognizer(panGesture)
-                        self.eventsListDisplay.addSubview(splitButton)
-                        buttonList.append(splitButton)
-                    }
-                    else {
-                        currentButton.frame.origin.y = bottomOfMovedButton
-                    }
-                }
-                let hour = Int(eventEditedForButton.frame.origin.y / 60)
-                let minute = Int(eventEditedForButton.frame.origin.y) - (hour * 60)
-                let duration = Int(eventEditedForButton.bounds.height)
-                let titleLabel = String(format: "%2d:%2d, for %d min", hour, minute, duration)
-                eventEditedForButton.setTitle(titleLabel, for:[])
+                editBlocks(button1: eventEditedForButton, button2: currentButton)
             }
         }
 
@@ -200,11 +184,11 @@ class MyCalendarView: UIViewController {
             let hourBegin = thisDate!.todaysEventsDateTimes[j].hour
             let minuteBegin = thisDate!.todaysEventsDateTimes[j].minute
             let duration = thisDate!.todaysEventsTimeElapsed[j]
+            // Label displays time and duration of event, later change to show title
             let timeOfEvent = String(format:"%02d:%02d, for %d min", hourBegin!, minuteBegin!, duration)
             //raiseButton.setTitle(thisDate.getDescription(i: j), for: []);
             raiseButton.setTitle(timeOfEvent, for: []);
             
-            raiseButton.sizeToFit()
             let timeElapsed = thisDate!.todaysEventsTimeElapsed[j]
             let beginAtHeight = hourBegin!*60 + minuteBegin!
             raiseButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
