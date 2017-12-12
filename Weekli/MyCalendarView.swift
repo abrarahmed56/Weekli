@@ -263,6 +263,23 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     }
     
     func handleBottomOfBlock(button: MyEventButton) {
+        /*var totalDuration = button.bounds.height
+        var i = 0
+        while ( i < buttonList.count ) {
+        //for i in 0 ..< buttonList.count {
+            if ( button != buttonList[i] && buttonList[i].id == button.id ) {
+                totalDuration = totalDuration + buttonList[i].bounds.height
+                buttonList[i].removeFromSuperview()
+                buttonList.remove(at: i)
+                i -= 1
+            }
+            i = i + 1
+        }
+        if ( totalDuration != button.bounds.height) {
+            button.frame = CGRect(x: button.frame.origin.x, y: button.frame.origin.y, width: 300, height: totalDuration)
+            handleTopOfBlock(button: button)
+        }
+        else {*/
         for i in 0 ..< buttonList.count {
             let currentButton = buttonList[i]
             let topOfButton = button.frame.origin.y
@@ -272,11 +289,11 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
             // top of button is inside another button
             if (currentButton != button && (topOfCurrentButton >= topOfButton && topOfCurrentButton < bottomOfButton)) {
                 //block is inside
-                print("true?")
                 currentButton.frame.origin.y = CGFloat(bottomOfButton)
                 placeBlock(button1: currentButton)
                 //return true
             }
+            //}
             
         }
     }
