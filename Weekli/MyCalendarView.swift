@@ -91,11 +91,42 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         reloadData(day: day, month: month, year: year)
     }
     
-    func placeBlock(button1: MyEventButton) {
-        print("blocks overlapping?")
-        // Have to move the beginning of this block to somewhere else
-        handleTopOfBlock(button: button1)
-        handleBottomOfBlock(button: button1)
+    func placeBlock(button: MyEventButton) {
+        print("placing block: ", button.title)
+        /*var index = 0
+        while index < buttonList.count {
+        //for index in 0 ..< buttonList.count {*/
+        //var button = buttonList[index]
+        if ( button.primary ) {
+            var totalDuration = button.bounds.height
+            var i = 0
+            while ( i < buttonList.count ) {
+                //for i in 0 ..< buttonList.count {
+                if ( button != buttonList[i] && !buttonList[i].primary && buttonList[i].id == button.id ) {
+                    totalDuration = totalDuration + buttonList[i].bounds.height
+                    buttonList[i].removeFromSuperview()
+                    buttonList.remove(at: i)
+                    i -= 1
+                    //index = index - 1
+                }
+                i = i + 1
+            }
+            button.frame = CGRect(x: button.frame.origin.x, y: button.frame.origin.y, width: 300, height: totalDuration)
+        }
+        else {
+            button.primary = true
+            button.id = Int(arc4random())
+            }
+            //index = index + 1
+            //}
+        if ( button.fixed ) {
+            handleTopOfBlock(button: button)
+            handleBottomOfBlock(button: button)
+        }
+        else {
+            handleBottomOfBlock(button: button)
+            handleTopOfBlock(button: button)
+        }
             //button1.frame.origin.y = //bottomOfOtherButton
             //moveTopOfButtonDown(button: button1)
         /*let newHeight = originOfNextButton(button: button1) - Int(button1.frame.origin.y)
@@ -158,12 +189,12 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
             edited = true
             button2.frame.origin.y = bottomOfMovedButton
         }*/
-        let hour = Int(button1.frame.origin.y / 60)
-        let minute = Int(button1.frame.origin.y) - (hour * 60)
-        let duration = Int(button1.bounds.height)
-        let eventName = button1.title
+        let hour = Int(button.frame.origin.y / 60)
+        let minute = Int(button.frame.origin.y) - (hour * 60)
+        let duration = Int(button.bounds.height)
+        let eventName = button.title
         let titleLabel = String(format: "%02d:%02d, for %d min", hour, minute, duration)
-        button1.setTitle(eventName + "- " + titleLabel, for:[])
+        button.setTitle(eventName + "- " + titleLabel, for:[])
     }
     
     func originOfNextButton(button: MyEventButton) -> Int {
@@ -209,6 +240,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     }
     
     func handleTopOfBlock(button: MyEventButton) {
+        print("handling top of block: " + button.title)
         for i in 0 ..< buttonList.count {
             let currentButton = buttonList[i]
             let topOfButton = button.frame.origin.y
@@ -220,8 +252,9 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                 //block is inside
                 print("true?")
                 if ( currentButton.fixed ) {
+                    
                     button.frame.origin.y = CGFloat(bottomOfCurrentButton)
-                    placeBlock(button1: button)
+                    placeBlock(button: button)
                 }
                 else {
                     //split up the other block
@@ -230,8 +263,8 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                     currentButton.frame = CGRect(x: currentButton.frame.origin.x, y: currentButton.frame.origin.y, width: 300, height: newHeight)
                     let splitButton = MyEventButton.init()
                     updateLabel(button:currentButton)
-                    splitButton.frame = CGRect(x: button.frame.origin.x, y:button.frame.origin.y, width: 300, height: splitHeight)
-                    splitButton.id = button.id
+                    splitButton.frame = CGRect(x: currentButton.frame.origin.x, y:bottomOfButton, width: 300, height: splitHeight)
+                    splitButton.id = currentButton.id
                     splitButton.primary = false
                     splitButton.title = currentButton.title
                     updateLabel(button: splitButton)
@@ -241,6 +274,8 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
 
                     self.eventsListDisplay.addSubview(splitButton)
                     buttonList.append(splitButton)
+                    //placeBlock(button1: splitButton)
+
                     //placeBlock(button1: splitButton)
                     /*let eventName = button.title
                     let hour = Int(button1.frame.origin.y / 60)
@@ -263,6 +298,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     }
     
     func handleBottomOfBlock(button: MyEventButton) {
+        print("handling bottom of block: " + button.title)
         /*var totalDuration = button.bounds.height
         var i = 0
         while ( i < buttonList.count ) {
@@ -289,9 +325,31 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
             // top of button is inside another button
             if (currentButton != button && (topOfCurrentButton >= topOfButton && topOfCurrentButton < bottomOfButton)) {
                 //block is inside
-                currentButton.frame.origin.y = CGFloat(bottomOfButton)
-                placeBlock(button1: currentButton)
-                //return true
+                if ( currentButton.fixed || !button.fixed ) {
+                    currentButton.frame.origin.y = CGFloat(bottomOfButton)
+                    placeBlock(button: currentButton)
+                }
+                //split up this block
+                else {
+                    let newHeight = topOfCurrentButton - topOfButton
+                    let splitHeight = bottomOfButton - topOfButton - newHeight
+                    button.frame = CGRect(x: button.frame.origin.x, y: button.frame.origin.y, width: 300, height: newHeight)
+                    let splitButton = MyEventButton.init()
+                    updateLabel(button:currentButton)
+                    splitButton.frame = CGRect(x: currentButton.frame.origin.x, y: currentButton.frame.origin.y + currentButton.bounds.height, width: 300, height: splitHeight)
+                    splitButton.id = button.id
+                    splitButton.primary = false
+                    splitButton.title = button.title
+                    updateLabel(button: splitButton)
+                    
+                    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
+                    splitButton.addGestureRecognizer(panGesture)
+                    
+                    self.eventsListDisplay.addSubview(splitButton)
+                    buttonList.append(splitButton)
+                    //placeBlock(button1: splitButton)
+                    
+                }
             }
             //}
             
@@ -328,7 +386,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                 eventEditedForButton = buttonList[i]
             }
         }
-        for i in 0 ..< buttonList.count {
+        /*for i in 0 ..< buttonList.count {
             let currentButton = buttonList[i]
             if ( view != currentButton ) {
                 if ( eventEditedForButton.primary ) {
@@ -336,8 +394,8 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                     eventEditedForButton.id = Int(arc4random())
                 }
             }
-        }
-        placeBlock(button1: eventEditedForButton)
+        }*/
+        placeBlock(button: eventEditedForButton)
     }
     
     
@@ -377,6 +435,12 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         //cell configuration here later to shorten code
     }
     
+    func getRandomColor() -> UIColor {
+        let redVal = CGFloat(arc4random()) / CGFloat(UInt32.max)
+        let greenVal = CGFloat(arc4random()) / CGFloat(UInt32.max)
+        let blueVal = CGFloat(arc4random()) / CGFloat(UInt32.max)
+        return UIColor(red: redVal, green: greenVal, blue: blueVal, alpha: 1.0)
+    }
     
     
     func reloadData(day: Int, month: Int, year: Int) {
@@ -391,6 +455,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         if (thisDate != nil) {
         for j in 0 ..< thisDate!.getNumEvents() {
             let raiseButton = MyEventButton.init();
+            raiseButton.backgroundColor = getRandomColor()
             let hourBegin = thisDate!.todaysEventsDateTimes[j].hour
             let minuteBegin = thisDate!.todaysEventsDateTimes[j].minute
             let duration = thisDate!.todaysEventsTimeElapsed[j]
