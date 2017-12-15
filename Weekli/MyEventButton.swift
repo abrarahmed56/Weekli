@@ -23,7 +23,7 @@ class MyEventButton: MDCRaisedButton {
     
     var title: String = ""
     
-    /*func copy() -> MyEventButton {
+    func myCopy() -> MyEventButton {
         let button = self
         let returnButton = MyEventButton.init()
         returnButton.frame = button.frame
@@ -31,7 +31,11 @@ class MyEventButton: MDCRaisedButton {
         returnButton.title = button.title
         returnButton.setTitle(String(describing: button.titleLabel), for: [])
         return returnButton
-    }*/
+    }
+    
+    func updateLabel() {
+        
+    }
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

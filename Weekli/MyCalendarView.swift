@@ -38,7 +38,8 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     var eventsList = DayDictionary()
     var eventsFromTheServer: [String:String] = [:]
     var buttonList: [MyEventButton] = []
-    var previousStatesList : [[MyEventButton]] = [[]]
+    var previousStatesList : [[MyEventButton]] = []
+    var blockSplitsOtherBlocks : [MyEventButton] = []
 
 
     override func viewDidLoad() {
@@ -109,7 +110,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         combineSplitBlocks()
         //moveTopOfOthersToProperSpot(button: button, keepSame: false)
         //print("handling top of block: " + button.title, buttonList.count)
-        var i = 0
         for i in 0 ..< buttonList.count {
             let currentButton = buttonList[i]
             let topOfButton = button.frame.origin.y
@@ -129,26 +129,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                 }
                 // Block that is overlapped is dynamic, split up the other block to wrap around moved block
                 else {
-                    let newHeight = topOfButton - topOfCurrentButton
-                    let splitHeight = bottomOfCurrentButton - topOfCurrentButton - newHeight
-                    currentButton.frame = CGRect(x: currentButton.frame.origin.x, y: currentButton.frame.origin.y, width: 250, height: newHeight)
-                    let splitButton = MyEventButton.init()
-                    updateLabel(button:currentButton)
-                    splitButton.frame = CGRect(x: currentButton.frame.origin.x, y:bottomOfButton, width: 250, height: splitHeight)
-                    splitButton.id = currentButton.id
-                    splitButton.primary = false
-                    splitButton.title = currentButton.title
-                    splitButton.backgroundColor = currentButton.backgroundColor
-                    splitButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
-                    splitButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
-                    updateLabel(button: splitButton)
-
-                    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
-                    splitButton.addGestureRecognizer(panGesture)
-
-                    self.eventsListDisplay.addSubview(splitButton)
-                    buttonList.append(splitButton)
-                    //print("split button added (move top)", splitButton.title)
+                    split(block: currentButton, fromBlock: button)
                 }
             }
             else {
@@ -159,12 +140,10 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
 
     func moveTopOfOthersToProperSpot(button: MyEventButton, keepSame: Bool) {
         print("move top of others ", button.title)
-        for j in 0 ..< buttonList.count {
-            if ( button != buttonList[j] ) {
-                let comparingButton = buttonList[j]
+        for comparingButton in buttonList {
+            if ( button != comparingButton ) {
                 if (button != comparingButton) {
-                for i in 0 ..< buttonList.count {
-                    let currentButton = buttonList[i]
+                for currentButton in buttonList {
                     let topOfButton = comparingButton.frame.origin.y
                     let topOfCurrentButton = currentButton.frame.origin.y
                     let bottomOfButton = topOfButton + comparingButton.bounds.height
@@ -180,26 +159,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                         else {
                             //if ( keepSame && currentButton == button ) {
                             print("splitting ", button.title)
-                            let newHeight = topOfButton - topOfCurrentButton
-                            let splitHeight = bottomOfCurrentButton - topOfCurrentButton - newHeight
-                            currentButton.frame = CGRect(x: currentButton.frame.origin.x, y: currentButton.frame.origin.y,  width: 250, height: newHeight)
-                            let splitButton = MyEventButton.init()
-                            updateLabel(button:currentButton)
-                            splitButton.frame = CGRect(x: currentButton.frame.origin.x, y:bottomOfButton, width: 250, height: splitHeight)
-                            splitButton.id = currentButton.id
-                            splitButton.primary = false
-                            splitButton.title = currentButton.title
-                            splitButton.backgroundColor = currentButton.backgroundColor
-                            splitButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
-                            splitButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
-                            updateLabel(button: splitButton)
-                    
-                            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
-                            splitButton.addGestureRecognizer(panGesture)
-                    
-                            self.eventsListDisplay.addSubview(splitButton)
-                            buttonList.append(splitButton)
-                            //print("split button added (move top others)", splitButton.title, comparingButton.title)
+                            split(block: currentButton, fromBlock: comparingButton)
                         }
                         //}
     
@@ -417,6 +377,34 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
             returnList.append(newButton)
         }
         return returnList
+    }
+    
+    func split(block: MyEventButton, fromBlock: MyEventButton) {
+        let topOfButton = fromBlock.frame.origin.y
+        let topOfBlock = block.frame.origin.y
+        let bottomOfButton = topOfButton + fromBlock.bounds.height
+        let bottomOfBlock = topOfBlock + block.bounds.height
+
+        let newHeight = topOfButton - topOfBlock
+        let splitHeight = bottomOfBlock - topOfBlock - newHeight
+        block.frame = CGRect(x: block.frame.origin.x, y: block.frame.origin.y,  width: 250, height: newHeight)
+        let splitButton = MyEventButton.init()
+        updateLabel(button:block)
+        splitButton.frame = CGRect(x: block.frame.origin.x, y:bottomOfButton, width: 250, height: splitHeight)
+        splitButton.id = block.id
+        splitButton.primary = false
+        splitButton.title = block.title
+        splitButton.backgroundColor = block.backgroundColor
+        splitButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+        splitButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
+        updateLabel(button: splitButton)
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
+        splitButton.addGestureRecognizer(panGesture)
+        
+        self.eventsListDisplay.addSubview(splitButton)
+        buttonList.append(splitButton)
+        //print("split button added (move top others)", splitButton.title, comparingButton.title)
     }
     
     /*
