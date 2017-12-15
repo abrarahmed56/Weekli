@@ -23,7 +23,15 @@ class MyEventButton: MDCRaisedButton {
     
     var title: String = ""
     
-    
+    /*func copy() -> MyEventButton {
+        let button = self
+        let returnButton = MyEventButton.init()
+        returnButton.frame = button.frame
+        returnButton.backgroundColor = button.backgroundColor
+        returnButton.title = button.title
+        returnButton.setTitle(String(describing: button.titleLabel), for: [])
+        return returnButton
+    }*/
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

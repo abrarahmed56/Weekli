@@ -57,7 +57,28 @@
                                 <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="Your Weekli View" id="itC-Zh-StR"/>
+                                    <navigationItem title="Your Weekli View" id="itC-Zh-StR">
+                                        <barButtonItem key="leftBarButtonItem" style="plain" id="SFQ-xh-n3d">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sQF-JB-maE">
+                                                <rect key="frame" x="16" y="7" width="71" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Clear"/>
+                                                <connections>
+                                                    <action selector="clearEvents" destination="Hte-Nt-GoS" eventType="touchUpInside" id="fx5-IS-sj2"/>
+                                                </connections>
+                                            </button>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" style="plain" id="J9O-K6-iOo">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wCs-i3-evy">
+                                                <rect key="frame" x="233" y="7" width="71" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Undo"/>
+                                                <connections>
+                                                    <action selector="undoAction:" destination="Hte-Nt-GoS" eventType="touchUpInside" id="xod-IO-TTp"/>
+                                                </connections>
+                                            </button>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hj7-bj-cop">
@@ -215,6 +236,7 @@
                         <outlet property="EventsListDisplay" destination="pWD-cu-Lvp" id="FMj-ie-ENp"/>
                         <outlet property="barButtonPost" destination="mgO-f6-Sox" id="rHh-HN-YKO"/>
                         <outlet property="calendarView" destination="CV2-gu-Xvx" id="9Go-9d-oQf"/>
+                        <outlet property="undoButton" destination="J9O-K6-iOo" id="4FO-FG-WyJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hqc-Lk-ISe" userLabel="First Responder" sceneMemberID="firstResponder"/>
