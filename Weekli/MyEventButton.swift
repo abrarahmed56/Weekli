@@ -29,12 +29,21 @@ class MyEventButton: MDCRaisedButton {
         returnButton.frame = button.frame
         returnButton.backgroundColor = button.backgroundColor
         returnButton.title = button.title
-        returnButton.setTitle(String(describing: button.titleLabel), for: [])
+        returnButton.updateLabel()
+        returnButton.id = self.id
+        returnButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+        returnButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
+
         return returnButton
     }
     
+    // Update label of block to show the name, time, and duration
     func updateLabel() {
-        
+        let hour = Int(self.frame.origin.y / 60)
+        let minute = Int(self.frame.origin.y) - (hour * 60)
+        let duration = Int(self.bounds.height)
+        let titleLabel = self.title + String(format: "%02d:%02d, for %d min", hour, minute, duration)
+        self.setTitle(titleLabel, for: [])
     }
     /*
     // Only override draw() if you perform custom drawing.

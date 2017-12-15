@@ -99,8 +99,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         print("placing block: ", button.title)
         moveTopToProperSpot(button: button)
         //moveTopOfOthersToProperSpot(button: button, keepSame: true)
-        updateLabel(button: button)
-        previousStatesList.append(copyOfList(bList: buttonList))
+        button.updateLabel()
         undoButton.isEnabled = true
     }
     
@@ -110,8 +109,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         combineSplitBlocks()
         //moveTopOfOthersToProperSpot(button: button, keepSame: false)
         //print("handling top of block: " + button.title, buttonList.count)
-        for i in 0 ..< buttonList.count {
-            let currentButton = buttonList[i]
+        for currentButton in buttonList {
             let topOfButton = button.frame.origin.y
             let topOfCurrentButton = currentButton.frame.origin.y
             let bottomOfButton = topOfButton + button.bounds.height
@@ -169,17 +167,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
             }
         }
     }
-    
-    
-    // Update label of block to show the name, time, and duration
-    func updateLabel(button: MyEventButton) {
-        let hour = Int(button.frame.origin.y / 60)
-        let minute = Int(button.frame.origin.y) - (hour * 60)
-        let duration = Int(button.bounds.height)
-        let titleLabel = button.title + String(format: "%02d:%02d, for %d min", hour, minute, duration)
-        button.setTitle(titleLabel, for: [])
-    }
-    
     
     //Button released
     func editTimeOfEvent(view: UIView) {
@@ -251,6 +238,9 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                 editTimeOfEvent(view: view)
             }
         }
+        if ( recognizer.state == .began) {
+            previousStatesList.append(copyOfList(bList: buttonList))
+        }
         recognizer.setTranslation(CGPoint.zero, in: self.view)
     }
     
@@ -290,7 +280,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     
     
     func reloadData(day: Int, month: Int, year: Int) {
-        previousStatesList = [[]]
+        previousStatesList = []
         undoButton.isEnabled = false
         clearEvents()
         eventsListDisplay.contentSize = CGSize(width: eventsListDisplay.contentSize.width, height: 1440)
@@ -316,8 +306,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                 raiseButton.frame.origin.y = CGFloat(beginAtHeight)
                 raiseButton.id = Int(arc4random())
                 raiseButton.title = thisDate!.todaysEventsDescriptions[j]
-                let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
-                raiseButton.addGestureRecognizer(panGesture)
+                addPanGestureRecognizer(button: raiseButton)
                 let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
                 raiseButton.addGestureRecognizer(tapGesture)
                 buttonList.append(raiseButton)
@@ -352,9 +341,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     }
     
     func showEventsFromButtons(newButtonList: [MyEventButton]) {
-        print("show events from buttons")
         for button in newButtonList {
-            print("showing an event from buttons")
             print(button.frame.origin.y)
             self.eventsListDisplay.addSubview(button)
         }
@@ -372,8 +359,9 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     func copyOfList(bList: [MyEventButton]) -> [MyEventButton] {
         var returnList : [MyEventButton] = []
         for button in bList {
-            let newButton = MyEventButton.init(frame: CGRect(x: button.frame.origin.x, y: button.frame.origin.y, width: 300, height: button.frame.origin.y + button.bounds.height))
-            //let newButton = button.copy()
+            //let newButton = MyEventButton.init(frame: CGRect(x: button.frame.origin.x, y: button.frame.origin.y, width: 300, height: button.frame.origin.y + button.bounds.height))
+            let newButton = button.myCopy()
+            addPanGestureRecognizer(button: newButton)
             returnList.append(newButton)
         }
         return returnList
@@ -389,7 +377,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         let splitHeight = bottomOfBlock - topOfBlock - newHeight
         block.frame = CGRect(x: block.frame.origin.x, y: block.frame.origin.y,  width: 250, height: newHeight)
         let splitButton = MyEventButton.init()
-        updateLabel(button:block)
+        block.updateLabel()
         splitButton.frame = CGRect(x: block.frame.origin.x, y:bottomOfButton, width: 250, height: splitHeight)
         splitButton.id = block.id
         splitButton.primary = false
@@ -397,14 +385,20 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         splitButton.backgroundColor = block.backgroundColor
         splitButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         splitButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
-        updateLabel(button: splitButton)
+        splitButton.updateLabel()
+        splitButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+        splitButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
         
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
-        splitButton.addGestureRecognizer(panGesture)
+        addPanGestureRecognizer(button: splitButton)
         
         self.eventsListDisplay.addSubview(splitButton)
         buttonList.append(splitButton)
         //print("split button added (move top others)", splitButton.title, comparingButton.title)
+    }
+    
+    func addPanGestureRecognizer(button: MyEventButton) {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
+        button.addGestureRecognizer(panGesture)
     }
     
     /*
