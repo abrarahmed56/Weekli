@@ -97,8 +97,12 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     
     func placeBlock(button: MyEventButton) {
         print("placing block: ", button.title)
+        let index = blockSplitsOtherBlocks.index(of: button)
+        if ( index != nil ) {
+            blockSplitsOtherBlocks.remove(at: index!)
+        }
         moveTopToProperSpot(button: button)
-        //moveTopOfOthersToProperSpot(button: button, keepSame: true)
+        moveTopOfOthersToProperSpot(button: button)
         button.updateLabel()
         undoButton.isEnabled = true
     }
@@ -107,7 +111,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     func moveTopToProperSpot(button: MyEventButton) {
         print("movetop ", button.title)
         combineSplitBlocks()
-        //moveTopOfOthersToProperSpot(button: button, keepSame: false)
         //print("handling top of block: " + button.title, buttonList.count)
         for currentButton in buttonList {
             let topOfButton = button.frame.origin.y
@@ -116,13 +119,11 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
             let bottomOfCurrentButton = topOfCurrentButton + currentButton.bounds.height
             // top of button is inside another button
             if (currentButton != button && (topOfButton >= topOfCurrentButton && topOfButton < bottomOfCurrentButton)) {
-                //print("blocks overlap")
                 // Block that is overlapped is fixed, move the moved button below the fixed block
-                if ( currentButton.fixed ) {
+                if ( currentButton.fixed /*|| blockSplitsOtherBlocks.contains(comparingButton)*/) {
                     
                     button.frame.origin.y = CGFloat(bottomOfCurrentButton)
                     //print("changing block placement")
-                    moveTopOfOthersToProperSpot(button: button, keepSame: true)
                     return
                 }
                 // Block that is overlapped is dynamic, split up the other block to wrap around moved block
@@ -136,7 +137,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         }
     }
 
-    func moveTopOfOthersToProperSpot(button: MyEventButton, keepSame: Bool) {
+    func moveTopOfOthersToProperSpot(button: MyEventButton) {
         print("move top of others ", button.title)
         for comparingButton in buttonList {
             if ( button != comparingButton ) {
@@ -148,14 +149,13 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                     let bottomOfCurrentButton = topOfCurrentButton + currentButton.bounds.height
                     // top of button is inside another button
                     if (currentButton != comparingButton && (topOfButton >= topOfCurrentButton && topOfButton <     bottomOfCurrentButton)) {
-                        if ( currentButton.fixed ) {
+                        if ( currentButton.fixed || ((!currentButton.fixed && !comparingButton.fixed) && blockSplitsOtherBlocks.contains(currentButton))) {
                             comparingButton.frame.origin.y = CGFloat(bottomOfCurrentButton)
-                            //print("changing block placement (others)", comparingButton.title)
+                            print("changing block placement (others)", comparingButton.title)
                             placeBlock(button: comparingButton)
                         }
                             // Block that is overlapped is dynamic, split up the other block to wrap around moved block
                         else {
-                            //if ( keepSame && currentButton == button ) {
                             print("splitting ", button.title)
                             split(block: currentButton, fromBlock: comparingButton)
                         }
@@ -393,6 +393,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         
         self.eventsListDisplay.addSubview(splitButton)
         buttonList.append(splitButton)
+        blockSplitsOtherBlocks.append(splitButton)
         //print("split button added (move top others)", splitButton.title, comparingButton.title)
     }
     
