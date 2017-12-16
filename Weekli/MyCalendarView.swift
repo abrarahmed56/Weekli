@@ -37,7 +37,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     
     var eventsList = DayDictionary()
     var eventsFromTheServer: [String:String] = [:]
-    //var buttonList = MyEventButtonList()
     var buttonList : [MyEventButton] = []
     var previousStatesList : [[MyEventButton]] = []
     var blockSplitsOtherBlocks : [MyEventButton] = []
@@ -94,7 +93,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         print("placing block: ", button.title)
         hasBeenEdited = false
         let index = blockSplitsOtherBlocks.index(of: button)
-        //blockSplitsOtherBlocks.removeAll()
         if ( index != nil ) {
             print("removing from split blocks")
             print(button.id)
@@ -104,9 +102,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         buttonList.sort { (block1, block2) -> Bool in
             return getTopOfBlock(block: block1) < getTopOfBlock(block: block2)
         }
-        /*for currentButton in buttonList {
-            moveTopToProperSpot(button: currentButton)
-        }*/
         for currentButton in buttonList {
             if blocksOverlap(block1: currentButton, block2: button) {
                 let indexHere = blockSplitsOtherBlocks.index(of: currentButton)
@@ -127,7 +122,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
             moveTopOfOthersToProperSpot(button: button)
             moveTopToProperSpot(button: button)
             button.updateLabel()
-            //print("do again")
         }
     }
     
@@ -151,29 +145,19 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     }
     
     func moveTopToProperSpot(button: MyEventButton) {
-        print("movetop ", button.title)
-        //print("handling top of block: " + button.title, buttonList.count)
         for currentButton in buttonList {
             // top of button is inside another button
-            //if ( (topOfButton >= topOfCurrentButton && topOfButton < bottomOfCurrentButton)) {
             if ( currentButton != button && blocksOverlap(block1: button, block2: currentButton) ) {
-                print ("blocks overlap", button.title, currentButton.title)
                 hasBeenEdited = true
                 // Block that is overlapped is fixed, move the moved button below the fixed block
-                if ( currentButton.fixed /*|| blockSplitsOtherBlocks.contains(comparingButton)*/) {
-                    
+                if ( currentButton.fixed ) {
                     button.frame.origin.y = CGFloat(getBottomOfBlock(block: currentButton))
-                    print("changing block placement (top)")
                     return
                 }
                 // Block that is overlapped is dynamic, split up the other block to wrap around moved block
                 else {
-                    print("splitting (top)")
                     split(block: currentButton, fromBlock: button)
                 }
-            }
-            else {
-                print("blocks don't overlap", button.title, currentButton.title)
             }
         }
     }
@@ -185,26 +169,14 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                 for currentButton in buttonList {
                     // top of button is inside another button
                     if (currentButton != comparingButton && blocksOverlap(block1: comparingButton, block2: currentButton)) {
-                        //hasBeenEdited = true
-                        print("blocks overlap", button.title, currentButton.title)
                         if ( currentButton.fixed || ((!currentButton.fixed && !comparingButton.fixed) &&
                             !blockSplitsOtherBlocks.contains(currentButton) && comparingButton != button)) {
-                            print("moving down")
                             comparingButton.frame.origin.y = CGFloat(getBottomOfBlock(block: currentButton))
-                            print(blockSplitsOtherBlocks.count)
                         }
-                            // Block that is overlapped is dynamic, split up the other block to wrap around moved block
+                        // Block that is overlapped is dynamic, split up the other block to wrap around moved block
                         else {
-                            print("splitting ")
-                            print("changing block placement (others)", comparingButton.title)
-                            print(!currentButton.fixed)
-                            print(!comparingButton.fixed)
-                            print(!blockSplitsOtherBlocks.contains(currentButton))
-                            print(comparingButton != button)
                             split(block: currentButton, fromBlock: comparingButton)
                         }
-                        //}
-    
                     }
                 }
             }
@@ -352,7 +324,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                 self.eventsListDisplay.addSubview(raiseButton)
             }
         }
-        //previousStatesList.append(buttonList)
     }
 
     @IBAction func undoAction(_ sender: Any) {
@@ -394,7 +365,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     func copyOfList(bList: [MyEventButton]) -> [MyEventButton] {
         var returnList : [MyEventButton] = []
         for button in bList {
-            //let newButton = MyEventButton.init(frame: CGRect(x: button.frame.origin.x, y: button.frame.origin.y, width: 300, height: button.frame.origin.y + button.bounds.height))
             let newButton = button.myCopy()
             addPanGestureRecognizer(button: newButton)
             returnList.append(newButton)
