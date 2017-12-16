@@ -37,9 +37,11 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     
     var eventsList = DayDictionary()
     var eventsFromTheServer: [String:String] = [:]
-    var buttonList: [MyEventButton] = []
+    //var buttonList = MyEventButtonList()
+    var buttonList : [MyEventButton] = []
     var previousStatesList : [[MyEventButton]] = []
     var blockSplitsOtherBlocks : [MyEventButton] = []
+    var hasBeenEdited = false
 
 
     override func viewDidLoad() {
@@ -90,32 +92,66 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     
     func placeBlock(button: MyEventButton) {
         print("placing block: ", button.title)
+        hasBeenEdited = false
+        let beginningOfPlacedBlock = getTopOfBlock(block: button)
         let index = blockSplitsOtherBlocks.index(of: button)
         if ( index != nil ) {
             blockSplitsOtherBlocks.remove(at: index!)
         }
-        moveTopToProperSpot(button: button)
+        combineSplitBlocks()
+        buttonList.sort { (block1, block2) -> Bool in
+            return getTopOfBlock(block: block1) < getTopOfBlock(block: block2)
+        }
+        /*for currentButton in buttonList {
+            moveTopToProperSpot(button: currentButton)
+        }*/
         moveTopOfOthersToProperSpot(button: button)
+        moveTopToProperSpot(button: button)
         button.updateLabel()
         undoButton.isEnabled = true
+        if (hasBeenEdited) {
+            buttonList.sort { (block1, block2) -> Bool in
+                return getTopOfBlock(block: block1) < getTopOfBlock(block: block2)
+            }
+            moveTopOfOthersToProperSpot(button: button)
+            moveTopToProperSpot(button: button)
+            button.updateLabel()
+            print("do again")
+        }
     }
     
+    func blocksOverlap(block1: MyEventButton, block2: MyEventButton ) -> Bool {
+        let topOfBlock1 = getTopOfBlock(block: block1)
+        let topOfBlock2 = getTopOfBlock(block: block2)
+        let bottomOfBlock2 = getBottomOfBlock(block: block2)
+        return topOfBlock1 >= topOfBlock2 && topOfBlock1 < bottomOfBlock2
+    }
+    
+    func getTopOfBlock(block: MyEventButton) -> CGFloat {
+        return block.frame.origin.y
+    }
+    
+    func getBottomOfBlock(block: MyEventButton) -> CGFloat {
+        return getTopOfBlock(block: block) + block.bounds.height
+    }
+    
+    func moveTopToProperSpot(button: MyEventButton, top: CGFloat) {
+        
+    }
     
     func moveTopToProperSpot(button: MyEventButton) {
         print("movetop ", button.title)
-        combineSplitBlocks()
         //print("handling top of block: " + button.title, buttonList.count)
         for currentButton in buttonList {
-            let topOfButton = button.frame.origin.y
-            let topOfCurrentButton = currentButton.frame.origin.y
-            let bottomOfButton = topOfButton + button.bounds.height
-            let bottomOfCurrentButton = topOfCurrentButton + currentButton.bounds.height
             // top of button is inside another button
-            if (currentButton != button && (topOfButton >= topOfCurrentButton && topOfButton < bottomOfCurrentButton)) {
+            //if ( (topOfButton >= topOfCurrentButton && topOfButton < bottomOfCurrentButton)) {
+            if ( currentButton != button && blocksOverlap(block1: button, block2: currentButton) ) {
+                print ("blocks overlap", button.title, currentButton.title)
+                hasBeenEdited = true
                 // Block that is overlapped is fixed, move the moved button below the fixed block
                 if ( currentButton.fixed /*|| blockSplitsOtherBlocks.contains(comparingButton)*/) {
                     
-                    button.frame.origin.y = CGFloat(bottomOfCurrentButton)
+                    button.frame.origin.y = CGFloat(getBottomOfBlock(block: currentButton))
                     //print("changing block placement")
                     return
                 }
@@ -125,7 +161,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                 }
             }
             else {
-                //print("blocks don't overlap", currentButton.title)
+                print("blocks don't overlap", button.title, currentButton.title)
             }
         }
     }
@@ -134,27 +170,22 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         print("move top of others ", button.title)
         for comparingButton in buttonList {
             if ( button != comparingButton ) {
-                if (button != comparingButton) {
                 for currentButton in buttonList {
-                    let topOfButton = comparingButton.frame.origin.y
-                    let topOfCurrentButton = currentButton.frame.origin.y
-                    let bottomOfButton = topOfButton + comparingButton.bounds.height
-                    let bottomOfCurrentButton = topOfCurrentButton + currentButton.bounds.height
                     // top of button is inside another button
-                    if (currentButton != comparingButton && (topOfButton >= topOfCurrentButton && topOfButton <     bottomOfCurrentButton)) {
-                        if ( currentButton.fixed || ((!currentButton.fixed && !comparingButton.fixed) && blockSplitsOtherBlocks.contains(currentButton))) {
-                            comparingButton.frame.origin.y = CGFloat(bottomOfCurrentButton)
+                    if (currentButton != comparingButton && blocksOverlap(block1: comparingButton, block2: currentButton)) {
+                        if ( currentButton.fixed || ((!currentButton.fixed && !comparingButton.fixed) &&
+                            !blockSplitsOtherBlocks.contains(currentButton))) {
+                            comparingButton.frame.origin.y = CGFloat(getBottomOfBlock(block: currentButton))
                             print("changing block placement (others)", comparingButton.title)
-                            placeBlock(button: comparingButton)
+                            //placeBlock(button: comparingButton)
                         }
                             // Block that is overlapped is dynamic, split up the other block to wrap around moved block
                         else {
-                            print("splitting ", button.title)
+                            //print("splitting ", button.title)
                             split(block: currentButton, fromBlock: comparingButton)
                         }
                         //}
     
-                    }
                     }
                 }
             }
@@ -175,10 +206,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
             eventEditedForButton.id = Int(arc4random())
             eventEditedForButton.backgroundColor = getRandomColor()
         }
-        //combineSplitBlocks()
-        //print("block: ", eventEditedForButton.title, buttonList.count)
         placeBlock(button: eventEditedForButton)
-        //print("block: ", eventEditedForButton.title, buttonList.count)
     }
     
     // Combine blocks that were split previously
@@ -314,7 +342,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         print("pressed undo")
         let undidButtonList = getPreviousState()
         if ( undidButtonList != nil ) {
-            print("not nil")
             buttonList = undidButtonList!
             clearEvents()
             showEventsFromButtons(newButtonList: undidButtonList!)
@@ -335,7 +362,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     
     func showEventsFromButtons(newButtonList: [MyEventButton]) {
         for button in newButtonList {
-            print(button.frame.origin.y)
             self.eventsListDisplay.addSubview(button)
         }
     }
@@ -361,17 +387,18 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     }
     
     func split(block: MyEventButton, fromBlock: MyEventButton) {
-        let topOfButton = fromBlock.frame.origin.y
+        print("splitting", block.title, "from block:", fromBlock.title)
+        let topOfFromBlock = fromBlock.frame.origin.y
         let topOfBlock = block.frame.origin.y
-        let bottomOfButton = topOfButton + fromBlock.bounds.height
+        let bottomOfFromBlock = topOfFromBlock + fromBlock.bounds.height
         let bottomOfBlock = topOfBlock + block.bounds.height
 
-        let newHeight = topOfButton - topOfBlock
+        let newHeight = topOfFromBlock - topOfBlock
         let splitHeight = bottomOfBlock - topOfBlock - newHeight
         block.frame = CGRect(x: block.frame.origin.x, y: block.frame.origin.y,  width: 250, height: newHeight)
         let splitButton = MyEventButton.init()
         block.updateLabel()
-        splitButton.frame = CGRect(x: block.frame.origin.x, y:bottomOfButton, width: 250, height: splitHeight)
+        splitButton.frame = CGRect(x: block.frame.origin.x, y:bottomOfFromBlock, width: 250, height: splitHeight)
         splitButton.id = block.id
         splitButton.primary = false
         splitButton.title = block.title
@@ -386,7 +413,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         
         self.eventsListDisplay.addSubview(splitButton)
         buttonList.append(splitButton)
-        blockSplitsOtherBlocks.append(splitButton)
+        blockSplitsOtherBlocks.append(block)
         //print("split button added (move top others)", splitButton.title, comparingButton.title)
     }
     
@@ -394,6 +421,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
         button.addGestureRecognizer(panGesture)
     }
+    
     
     /*
     // MARK: - Navigation

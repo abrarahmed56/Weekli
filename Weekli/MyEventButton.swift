@@ -33,6 +33,7 @@ class MyEventButton: MDCRaisedButton {
         returnButton.id = self.id
         returnButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         returnButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
+        returnButton.primary = self.primary
 
         return returnButton
     }

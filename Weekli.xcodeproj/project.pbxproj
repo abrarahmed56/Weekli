@@ -44,6 +44,7 @@
 		5E4845B41FCF6DD300262DE0 /* MDCFontTraits.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4845B11FCF6DD300262DE0 /* MDCFontTraits.m */; };
 		5E4845B51FCF6DD300262DE0 /* UIFont+MaterialTypographyPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4845B31FCF6DD300262DE0 /* UIFont+MaterialTypographyPrivate.m */; };
 		5E4845B91FCF6F0500262DE0 /* UIApplication+AppExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4845B81FCF6F0500262DE0 /* UIApplication+AppExtensions.m */; };
+		5E7D2B9E1FE59BCD0060F73A /* MyEventButtonList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7D2B9D1FE59BCD0060F73A /* MyEventButtonList.swift */; };
 		5EAEFAEE1FC3B5BF0008F6BF /* GTLRCalendarObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EAEFAE91FC3B5BF0008F6BF /* GTLRCalendarObjects.m */; };
 		5EAEFAEF1FC3B5BF0008F6BF /* GTLRCalendarQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EAEFAEB1FC3B5BF0008F6BF /* GTLRCalendarQuery.m */; };
 		5EAEFAF01FC3B5BF0008F6BF /* GTLRCalendarService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EAEFAED1FC3B5BF0008F6BF /* GTLRCalendarService.m */; };
@@ -160,6 +161,7 @@
 		5E4845B61FCF6F0500262DE0 /* MaterialApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaterialApplication.h; path = "../material-components-ios-develop/components/private/Application/src/MaterialApplication.h"; sourceTree = "<group>"; };
 		5E4845B71FCF6F0500262DE0 /* UIApplication+AppExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIApplication+AppExtensions.h"; path = "../material-components-ios-develop/components/private/Application/src/UIApplication+AppExtensions.h"; sourceTree = "<group>"; };
 		5E4845B81FCF6F0500262DE0 /* UIApplication+AppExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+AppExtensions.m"; path = "../material-components-ios-develop/components/private/Application/src/UIApplication+AppExtensions.m"; sourceTree = "<group>"; };
+		5E7D2B9D1FE59BCD0060F73A /* MyEventButtonList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyEventButtonList.swift; sourceTree = "<group>"; };
 		5EAEFAE71FC3B5BF0008F6BF /* GTLRCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTLRCalendar.h; path = "../google-api-objectivec-client-for-rest-master/Source/GeneratedServices/Calendar/GTLRCalendar.h"; sourceTree = "<group>"; };
 		5EAEFAE81FC3B5BF0008F6BF /* GTLRCalendarObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTLRCalendarObjects.h; path = "../google-api-objectivec-client-for-rest-master/Source/GeneratedServices/Calendar/GTLRCalendarObjects.h"; sourceTree = "<group>"; };
 		5EAEFAE91FC3B5BF0008F6BF /* GTLRCalendarObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTLRCalendarObjects.m; path = "../google-api-objectivec-client-for-rest-master/Source/GeneratedServices/Calendar/GTLRCalendarObjects.m"; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				5E2E457D1FC0C142000E12CF /* Main.storyboard */,
 				1CE804FF1FDDE838006E3CC4 /* AddEventView.swift */,
 				5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */,
+				5E7D2B9D1FE59BCD0060F73A /* MyEventButtonList.swift */,
 				5EE3116E1FD8C03C00F8BAAA /* DayDictionary.swift */,
 				5EE3116C1FD8BD1100F8BAAA /* DayObject.swift */,
 				5E20CC721FDDF1520084BD5D /* MyEventButton.swift */,
@@ -747,6 +750,7 @@
 				5E4845AF1FCF6DBB00262DE0 /* UIFontDescriptor+MaterialTypography.m in Sources */,
 				5EAEFB171FC3B6B70008F6BF /* GTLRBase64.m in Sources */,
 				5E20CC731FDDF1520084BD5D /* MyEventButton.swift in Sources */,
+				5E7D2B9E1FE59BCD0060F73A /* MyEventButtonList.swift in Sources */,
 				5E4845B51FCF6DD300262DE0 /* UIFont+MaterialTypographyPrivate.m in Sources */,
 				5EAEFB0A1FC3B6980008F6BF /* GTLRObject.m in Sources */,
 				5EAEFB191FC3B6B70008F6BF /* GTLRURITemplate.m in Sources */,
