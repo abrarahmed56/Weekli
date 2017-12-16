@@ -109,7 +109,8 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         moveTopToProperSpot(button: button)
         button.updateLabel()
         undoButton.isEnabled = true
-        if (hasBeenEdited) {
+        while (hasBeenEdited) {
+            hasBeenEdited = false
             buttonList.sort { (block1, block2) -> Bool in
                 return getTopOfBlock(block: block1) < getTopOfBlock(block: block2)
             }
