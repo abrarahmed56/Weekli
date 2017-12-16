@@ -47,7 +47,7 @@ class AddEventView: UIViewController {
     @IBAction func onDatePickerChange(_ sender: Any) {
         let dateFormatter = DateFormatter()
         
-        dateFormatter.dateFormat = "dd MMM yy"
+        dateFormatter.dateFormat = "dd MM yyyy"
         print("datepicker", datePicker.date)
         let strDate = dateFormatter.string(from: datePicker.date)
         print("strdate", strDate)

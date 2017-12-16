@@ -47,13 +47,66 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
     
     func passAddEventData(controller: MyCalendarView, name: String, date: String, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int) {
         print("data from view controller delegate")
-        print(name)
-        print(date)
-        print(startHour)
-        print(startMinute)
-        print(endHour)
-        print(endMinute)
+        var dateArr = date.components(separatedBy: " ")
+        var day:Int? = Int(dateArr[0])
+        var month:Int? = Int(dateArr[1])
+        var year:Int? = Int(dateArr[2])
         
+        //Set date objects for start ande nd
+        var startComponents = DateComponents()
+        // startComponents.date = date
+        startComponents.day = day
+        startComponents.month = month
+        startComponents.year = year
+        startComponents.hour = startHour
+        startComponents.minute = startMinute
+        var endComponents = DateComponents()
+        // startComponenets.date = date
+        endComponents.day = day
+        endComponents.month = month
+        endComponents.year = year
+        endComponents.hour = endHour
+        endComponents.minute = endMinute
+        
+        let userCalendar = Calendar.current // user calendar
+        let startTimeObject = userCalendar.date(from: startComponents)
+        print("startTimeObject", startTimeObject)
+        let endTimeObject = userCalendar.date(from: endComponents)
+        print("endTimeObject", endTimeObject)
+        let googleUser = GIDSignIn.sharedInstance().currentUser;
+        
+    
+        var offsetMinutes: Int { return TimeZone.current.secondsFromGMT() }
+        print("offset minutes", offsetMinutes)
+        if(googleUser?.authentication != nil) {
+            print("attempting to add event")
+            var newEvent: GTLRCalendar_Event = GTLRCalendar_Event()
+            newEvent.summary = name
+            
+            //set GTLRDateTimes
+            var startTime: GTLRDateTime = GTLRDateTime(date:startTimeObject!, offsetMinutes: offsetMinutes)
+            var endTime: GTLRDateTime = GTLRDateTime(date:endTimeObject!, offsetMinutes: offsetMinutes)
+            
+            newEvent.reminders?.useDefault = 0
+            
+            newEvent.start?.dateTime = startTime
+            newEvent.end?.dateTime = endTime
+            
+            let service: GTLRCalendarService = GTLRCalendarService()
+            let query:GTLRCalendarQuery_EventsInsert = GTLRCalendarQuery_EventsInsert.query(withObject: newEvent, calendarId:"primary")
+            service.executeQuery(query, completionHandler: {(_ callbackTicket: GTLRServiceTicket, _ event: GTLRCalendar_Event, _ callbackError: Error?) -> Void in
+                print("executed query")
+                if callbackError == nil {
+                    print("added")
+                    print(newEvent.summary);
+                }
+                else {
+                    print("add failed")
+                    print(callbackError)
+                }
+                } as? GTLRServiceCompletionHandler)
+            
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

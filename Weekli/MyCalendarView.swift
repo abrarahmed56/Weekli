@@ -69,13 +69,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     }
     
     func passEventData(controller: AddEventView, name: String, date: String, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int) {
-//        print("data from delegate")
-//        print(name)
-//        print(date)
-//        print(startHour)
-//        print(startMinute)
-//        print(endHour)
-//        print(endMinute)
         delegate?.passAddEventData(controller: self, name: name, date: date, startHour: startHour, startMinute: startMinute, endHour: endHour, endMinute: endMinute)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -422,10 +415,8 @@ extension MyCalendarView: JTAppleCalendarViewDelegate {
         let parameters = ConfigurationParameters(startDate:startDate,
                                                  endDate: endDate,
                                                  numberOfRows: 1,
-                                                 /*calendar: <#T##Calendar?#>,*/
                                                  generateInDates: .forFirstMonthOnly,
                                                  generateOutDates: .off,
-                                                 /*firstDayOfWeek: <#T##DaysOfWeek?#>,*/
                                                  hasStrictBoundaries: false)
         return parameters
     }
@@ -483,6 +474,17 @@ extension MyCalendarView: JTAppleCalendarViewDataSource {
         validCell.selectedView.isHidden = true
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 extension MyCalendarView {
     func getServerEvents() -> [Date:String] {
