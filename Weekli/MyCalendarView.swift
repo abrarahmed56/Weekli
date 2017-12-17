@@ -41,6 +41,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     var previousStatesList : [[MyEventButton]] = []
     var blockSplitsOtherBlocks : [MyEventButton] = []
     var hasBeenEdited = false
+    var addBlockView : UIView? = nil
 
 
     override func viewDidLoad() {
@@ -408,6 +409,24 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         button.addGestureRecognizer(panGesture)
     }
     
+    @IBAction func addBlock(_ sender: Any) {
+        print("Add block")
+        /*let addBlockView = UIView.init()
+        addBlockView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+        addBlockView.backgroundColor = UIColor.red
+        let finishButton = MDCRaisedButton.init()
+        finishButton.backgroundColor = UIColor.gray
+        finishButton.frame = CGRect(x: 130, y: 270, width: 60, height: 30)
+        finishButton.addTarget(self, action: #selector(MyCalendarView.closeAddingBlockView), for: .touchUpInside)
+        addBlockView.addSubview(finishButton)
+        self.addBlockView = addBlockView
+        self.view.addSubview(addBlockView)*/
+    }
+    
+    func closeAddingBlockView() {
+        print("hi")
+        addBlockView?.removeFromSuperview()
+    }
     
     /*
     // MARK: - Navigation

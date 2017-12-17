@@ -73,7 +73,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
         print("startTimeObject", startTimeObject)
         let endTimeObject = userCalendar.date(from: endComponents)
         print("endTimeObject", endTimeObject)
-        let googleUser = GIDSignIn.sharedInstance().currentUser;
+        let googleUser = GIDSignIn.sharedInstance().currentUser
         
     
         var offsetMinutes: Int { return TimeZone.current.secondsFromGMT() }
@@ -82,7 +82,6 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
             print("attempting to add event")
             var newEvent: GTLRCalendar_Event = GTLRCalendar_Event()
             newEvent.summary = name
-            
             //set GTLRDateTimes
             var startTime: GTLRDateTime = GTLRDateTime(date:startTimeObject!, offsetMinutes: offsetMinutes)
             var endTime: GTLRDateTime = GTLRDateTime(date:endTimeObject!, offsetMinutes: offsetMinutes)
@@ -94,23 +93,25 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
             
             let service: GTLRCalendarService = GTLRCalendarService()
             let query:GTLRCalendarQuery_EventsInsert = GTLRCalendarQuery_EventsInsert.query(withObject: newEvent, calendarId:"primary")
+            print("got here")
             service.executeQuery(query, completionHandler: {(_ callbackTicket: GTLRServiceTicket, _ event: GTLRCalendar_Event, _ callbackError: Error?) -> Void in
                 print("executed query")
                 if callbackError == nil {
                     print("added")
-                    print(newEvent.summary);
+                    print(newEvent.summary)
                 }
                 else {
                     print("add failed")
                     print(callbackError)
                 }
                 } as? GTLRServiceCompletionHandler)
+            print("got here")
             
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let googleUser = GIDSignIn.sharedInstance().currentUser;
+        let googleUser = GIDSignIn.sharedInstance().currentUser
         if (googleUser?.authentication != nil) {
             self.performSegue(withIdentifier: "viewCalendar", sender: UIView())
         }
@@ -133,7 +134,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
 
     // Construct a query and get a list of upcoming events from the user calendar
     func fetchEvents() {
-        let googleUser = GIDSignIn.sharedInstance().currentUser;
+        let googleUser = GIDSignIn.sharedInstance().currentUser
         if (googleUser?.authentication != nil) {
             let query = GTLRCalendarQuery_EventsList.query(withCalendarId: "primary")
             query.maxResults = 10

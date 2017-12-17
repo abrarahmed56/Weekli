@@ -220,6 +220,11 @@
                                             </connections>
                                         </button>
                                     </barButtonItem>
+                                    <barButtonItem title="Add Block" id="UpM-eW-hPz">
+                                        <connections>
+                                            <action selector="addBlock:" destination="Hte-Nt-GoS" id="faI-ES-jcS"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="m5c-zV-ZQQ"/>
                                     <barButtonItem title="Post" id="mgO-f6-Sox">
                                         <connections>

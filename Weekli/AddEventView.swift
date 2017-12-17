@@ -35,6 +35,8 @@ class AddEventView: UIViewController {
     
     @IBAction func okay(_ sender: Any) {
         print("Data from form")
+        name = nameTextField.text!
+        date = datePicker.date.description
         print(name!)
         print(date!)
         print(startHour!)
