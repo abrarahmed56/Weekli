@@ -80,16 +80,21 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
         print("offset minutes", offsetMinutes)
         if(googleUser?.authentication != nil) {
             print("attempting to add event")
-            var newEvent: GTLRCalendar_Event = GTLRCalendar_Event()
+            let newEvent: GTLRCalendar_Event = GTLRCalendar_Event()
             newEvent.summary = name
+            newEvent.descriptionProperty = "blah"
             //set GTLRDateTimes
-            var startTime: GTLRDateTime = GTLRDateTime(date:startTimeObject!, offsetMinutes: offsetMinutes)
-            var endTime: GTLRDateTime = GTLRDateTime(date:endTimeObject!, offsetMinutes: offsetMinutes)
+            let startTime: GTLRDateTime = GTLRDateTime(date:startTimeObject!, offsetMinutes: offsetMinutes)
+            let googleStartTime = GTLRCalendar_EventDateTime.init()
+            googleStartTime.date = startTime
+            let endTime: GTLRDateTime = GTLRDateTime(date:endTimeObject!, offsetMinutes: offsetMinutes)
+            let googleEndTime = GTLRCalendar_EventDateTime.init()
+            googleEndTime.date = endTime
             
             newEvent.reminders?.useDefault = 0
             
-            newEvent.start?.dateTime = startTime
-            newEvent.end?.dateTime = endTime
+            newEvent.start = googleStartTime
+            newEvent.end? = googleEndTime
             
             let service: GTLRCalendarService = GTLRCalendarService()
             let query:GTLRCalendarQuery_EventsInsert = GTLRCalendarQuery_EventsInsert.query(withObject: newEvent, calendarId:"primary")
