@@ -73,7 +73,11 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
         print("startTimeObject", startTimeObject)
         let endTimeObject = userCalendar.date(from: endComponents)
         print("endTimeObject", endTimeObject)
+        
         let googleUser = GIDSignIn.sharedInstance().currentUser
+        print(googleUser?.userID)
+        print(googleUser?.profile.name)
+    
         
     
         var offsetMinutes: Int { return TimeZone.current.secondsFromGMT() }
@@ -85,32 +89,36 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
             newEvent.descriptionProperty = "blah"
             //set GTLRDateTimes
             let startTime: GTLRDateTime = GTLRDateTime(date:startTimeObject!, offsetMinutes: offsetMinutes)
-            let googleStartTime = GTLRCalendar_EventDateTime.init()
-            googleStartTime.date = startTime
+            //let googleStartTime = GTLRCalendar_EventDateTime.init()
+            //googleStartTime.date = startTime
             let endTime: GTLRDateTime = GTLRDateTime(date:endTimeObject!, offsetMinutes: offsetMinutes)
-            let googleEndTime = GTLRCalendar_EventDateTime.init()
-            googleEndTime.date = endTime
+            //let googleEndTime = GTLRCalendar_EventDateTime.init()
+            //googleEndTime.date = endTime
             
-            newEvent.reminders?.useDefault = 0
+            newEvent.start?.dateTime = startTime
+            newEvent.end?.dateTime = endTime
             
-            newEvent.start = googleStartTime
-            newEvent.end? = googleEndTime
+            newEvent.reminders?.useDefault = 1
             
             let service: GTLRCalendarService = GTLRCalendarService()
             let query:GTLRCalendarQuery_EventsInsert = GTLRCalendarQuery_EventsInsert.query(withObject: newEvent, calendarId:"primary")
             print("got here")
-            service.executeQuery(query, completionHandler: {(_ callbackTicket: GTLRServiceTicket, _ event: GTLRCalendar_Event, _ callbackError: Error?) -> Void in
+            service.executeQuery(query, completionHandler: {(ticket:GTLRServiceTicket?, object: Any?, error: Error?)->Void in
                 print("executed query")
-                if callbackError == nil {
+                if error == nil {
                     print("added")
                     print(newEvent.summary)
                 }
                 else {
                     print("add failed")
-                    print(callbackError)
+                    print(error)
                 }
-                } as? GTLRServiceCompletionHandler)
-            print("got here")
+                
+            })
+//            service.executeQuery(query, completionHandler: {(_ callbackTicket: GTLRServiceTicket, _ event: GTLRCalendar_Event, _ callbackError: Error?) -> Void in
+//     l           
+//                } as? GTLRServiceCompletionHandler)
+//            print("got here")
             
         }
     }
