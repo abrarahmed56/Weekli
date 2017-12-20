@@ -265,8 +265,14 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     }
     
     @IBAction func handleTap(recognizer:UITapGestureRecognizer) {
+        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editEventPopupID") as! EditEventPopupView
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        self.view.addSubview(popOverVC.view)
+        popOverVC.didMove(toParentViewController: self)
         print("Open menu")
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

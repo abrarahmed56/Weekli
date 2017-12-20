@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1CAEF4221FDB86E000D52514 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAEF4211FDB86E000D52514 /* CustomCell.swift */; };
+		1CD458ED1FEB146F00890684 /* EditEventPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD458EC1FEB146F00890684 /* EditEventPopupView.swift */; };
 		1CE805001FDDE838006E3CC4 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE804FF1FDDE838006E3CC4 /* AddEventView.swift */; };
 		5E0530DD1FC4EC5900E8BC67 /* MyCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */; };
 		5E1691D11FC2465900135810 /* google-api-objectivec-client-for-rest-master in Resources */ = {isa = PBXBuildFile; fileRef = 5E1691D01FC2465900135810 /* google-api-objectivec-client-for-rest-master */; };
@@ -88,6 +89,7 @@
 
 /* Begin PBXFileReference section */
 		1CAEF4211FDB86E000D52514 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		1CD458EC1FEB146F00890684 /* EditEventPopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditEventPopupView.swift; sourceTree = "<group>"; };
 		1CE804FF1FDDE838006E3CC4 /* AddEventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
 		313B55B0743FCC270906699B /* Pods_WeekliUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeekliUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCalendarView.swift; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */,
 				1CE804FF1FDDE838006E3CC4 /* AddEventView.swift */,
 				5E2E457D1FC0C142000E12CF /* Main.storyboard */,
+				1CD458EC1FEB146F00890684 /* EditEventPopupView.swift */,
 				5EE3116E1FD8C03C00F8BAAA /* DayDictionary.swift */,
 				5EE3116C1FD8BD1100F8BAAA /* DayObject.swift */,
 				5E20CC721FDDF1520084BD5D /* MyEventButton.swift */,
@@ -747,6 +750,7 @@
 				5E4845AF1FCF6DBB00262DE0 /* UIFontDescriptor+MaterialTypography.m in Sources */,
 				5EAEFB171FC3B6B70008F6BF /* GTLRBase64.m in Sources */,
 				5E20CC731FDDF1520084BD5D /* MyEventButton.swift in Sources */,
+				1CD458ED1FEB146F00890684 /* EditEventPopupView.swift in Sources */,
 				5E4845B51FCF6DD300262DE0 /* UIFont+MaterialTypographyPrivate.m in Sources */,
 				5EAEFB0A1FC3B6980008F6BF /* GTLRObject.m in Sources */,
 				5EAEFB191FC3B6B70008F6BF /* GTLRURITemplate.m in Sources */,
