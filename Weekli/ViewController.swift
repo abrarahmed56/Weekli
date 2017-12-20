@@ -14,7 +14,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
     
     // If modifying these scopes, delete your previously saved credentials by
     // resetting the iOS simulator or uninstall the app.
-    private let scopes = [kGTLRAuthScopeCalendarReadonly]
+    private let scopes = [kGTLRAuthScopeCalendar]
     private let service = GTLRCalendarService()
 
     var eventsList = DayDictionary()
@@ -86,35 +86,45 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
             print("attempting to add event")
             let newEvent: GTLRCalendar_Event = GTLRCalendar_Event()
             newEvent.summary = name
-            newEvent.descriptionProperty = "blah"
+            //newEvent.descriptionProperty = "blah"
             //set GTLRDateTimes
-            let startTime: GTLRDateTime = GTLRDateTime(date:startTimeObject!, offsetMinutes: offsetMinutes)
-            //let googleStartTime = GTLRCalendar_EventDateTime.init()
-            //googleStartTime.date = startTime
-            let endTime: GTLRDateTime = GTLRDateTime(date:endTimeObject!, offsetMinutes: offsetMinutes)
-            //let googleEndTime = GTLRCalendar_EventDateTime.init()
-            //googleEndTime.date = endTime
+            //let startTime: GTLRDateTime = GTLRDateTime(date:startTimeObject!, offsetMinutes: offsetMinutes)
+            let startTime: GTLRDateTime = GTLRDateTime(date: startTimeObject!)
+            let googleStartTime = GTLRCalendar_EventDateTime.init()
+            googleStartTime.dateTime = startTime
+
+            //let endTime: GTLRDateTime = GTLRDateTime(date:endTimeObject!, offsetMinutes: offsetMinutes)
+            let endTime: GTLRDateTime = GTLRDateTime(date: endTimeObject!)
+            let googleEndTime = GTLRCalendar_EventDateTime.init()
+            googleEndTime.dateTime = endTime
             
-            newEvent.start?.dateTime = startTime
-            newEvent.end?.dateTime = endTime
+            newEvent.start = googleStartTime
+            newEvent.end = googleEndTime
+            //newEvent.start?.dateTime = startTime
+            //newEvent.end?.dateTime = endTime
             
-            newEvent.reminders?.useDefault = 1
+            //newEvent.reminders?.useDefault = 1
             
             let service: GTLRCalendarService = GTLRCalendarService()
             let query:GTLRCalendarQuery_EventsInsert = GTLRCalendarQuery_EventsInsert.query(withObject: newEvent, calendarId:"primary")
+            //service.authorizer = googleUser!.authentication as! GTMFetcherAuthorizationProtocol
+                //GTMFetcherAuthorizationProtocol
+            service.authorizer = googleUser!.authentication.fetcherAuthorizer()
             print("got here")
             service.executeQuery(query, completionHandler: {(ticket:GTLRServiceTicket?, object: Any?, error: Error?)->Void in
                 print("executed query")
                 if error == nil {
                     print("added")
                     print(newEvent.summary)
+                    print(newEvent.start?.description)
+                    print(newEvent.end?.description)
                 }
                 else {
                     print("add failed")
                     print(error)
                 }
                 
-            })
+            } as? GTLRServiceCompletionHandler)
 //            service.executeQuery(query, completionHandler: {(_ callbackTicket: GTLRServiceTicket, _ event: GTLRCalendar_Event, _ callbackError: Error?) -> Void in
 //     l           
 //                } as? GTLRServiceCompletionHandler)
