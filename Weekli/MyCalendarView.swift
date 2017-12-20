@@ -151,7 +151,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
             if ( currentButton != button && blocksOverlap(block1: button, block2: currentButton) ) {
                 hasBeenEdited = true
                 // Block that is overlapped is fixed, move the moved button below the fixed block
-                if ( currentButton.fixed ) {
+                if ( currentButton.fixed == 1) {
                     button.frame.origin.y = CGFloat(getBottomOfBlock(block: currentButton))
                     return
                 }
@@ -170,7 +170,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                 for currentButton in buttonList {
                     // top of button is inside another button
                     if (currentButton != comparingButton && blocksOverlap(block1: comparingButton, block2: currentButton)) {
-                        if ( currentButton.fixed || ((!currentButton.fixed && !comparingButton.fixed) &&
+                        if ( currentButton.fixed == 1 || ((!(currentButton.fixed == 1) && !(comparingButton.fixed == 1)) &&
                             !blockSplitsOtherBlocks.contains(currentButton) && comparingButton != button)) {
                             comparingButton.frame.origin.y = CGFloat(getBottomOfBlock(block: currentButton))
                         }
@@ -360,8 +360,17 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
             horizontalLine.backgroundColor = UIColor.black
             horizontalLine.frame = CGRect(x: 0, y: i*60, width: 300, height: 1)
             let hourLabel = UILabel()
-            hourLabel.text = String.init(format: "%02d:%02d", i, 0)
-            hourLabel.frame = CGRect(x:240, y:i*60+1, width: 60, height: 20)
+            if ( i == 0 ) {
+                hourLabel.text = "12am"
+            }
+            else if ( i < 13 ) {
+                hourLabel.text = String.init(format: "%dam", i)
+            }
+            else {
+                hourLabel.text = String.init(format: "%dpm", i-12)
+            }
+            hourLabel.font = UIFont.init(name: hourLabel.font.fontName, size: 10)
+            hourLabel.frame = CGRect(x:260, y:i*60+1, width: 40, height: 15)
             self.eventsListDisplay.addSubview(horizontalLine)
             self.eventsListDisplay.addSubview(hourLabel)
         }
@@ -415,20 +424,18 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     
     @IBAction func addBlock(_ sender: Any) {
         print("Add block")
-        /*let addBlockView = UIView.init()
-        addBlockView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
-        addBlockView.backgroundColor = UIColor.red
+        let addBlockView = UIView.init()
+        addBlockView.frame = CGRect(x: 30, y: 100, width: 250, height: 250)
         let finishButton = MDCRaisedButton.init()
         finishButton.backgroundColor = UIColor.gray
-        finishButton.frame = CGRect(x: 130, y: 270, width: 60, height: 30)
+        finishButton.frame = CGRect(x: 95, y: 220, width: 60, height: 30)
         finishButton.addTarget(self, action: #selector(MyCalendarView.closeAddingBlockView), for: .touchUpInside)
         addBlockView.addSubview(finishButton)
         self.addBlockView = addBlockView
-        self.view.addSubview(addBlockView)*/
+        self.view.addSubview(addBlockView)
     }
     
     func closeAddingBlockView() {
-        print("hi")
         addBlockView?.removeFromSuperview()
     }
     

@@ -17,9 +17,9 @@ class MyEventButton: MDCRaisedButton {
     // if a secondary block is moved, the events are separated
     var primary : Bool = true
     
-    // fixed blocks cannot be moved
-    // dynamic blocks are wrapped around fixed blocks
-    var fixed : Bool = false
+    // fixed blocks cannot be moved, 1
+    // dynamic blocks are wrapped around fixed blocks, -1
+    var fixed : Int = 0
     
     var title: String = ""
     

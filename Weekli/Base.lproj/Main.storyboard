@@ -226,6 +226,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="m5c-zV-ZQQ"/>
+                                    <barButtonItem title="Save" id="rH3-hp-9XG"/>
                                     <barButtonItem title="Post" id="mgO-f6-Sox">
                                         <connections>
                                             <action selector="post:" destination="Hte-Nt-GoS" id="tkl-qO-g8k"/>
