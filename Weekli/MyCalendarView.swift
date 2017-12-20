@@ -219,7 +219,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                     }
                     i = i + 1
                 }
-                button.frame = CGRect(x: button.frame.origin.x, y: button.frame.origin.y, width: 250, height: totalDuration)
+                button.frame = CGRect(x: button.frame.origin.x, y: button.frame.origin.y, width: 230, height: totalDuration)
             }
             else {
                 button.primary = true
@@ -313,7 +313,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                 let beginAtHeight = hourBegin!*60 + minuteBegin!
                 raiseButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
                 raiseButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
-                raiseButton.frame = CGRect(x: 0, y: 0, width: 250, height: timeElapsed)
+                raiseButton.frame = CGRect(x: 0, y: 0, width: 230, height: timeElapsed)
                 raiseButton.frame.origin.y = CGFloat(beginAtHeight)
                 raiseButton.id = Int(arc4random())
                 raiseButton.title = thisDate!.todaysEventsDescriptions[j]
@@ -359,7 +359,11 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
             let horizontalLine = UIView()
             horizontalLine.backgroundColor = UIColor.black
             horizontalLine.frame = CGRect(x: 0, y: i*60, width: 300, height: 1)
+            let hourLabel = UILabel()
+            hourLabel.text = String.init(format: "%02d:%02d", i, 0)
+            hourLabel.frame = CGRect(x:240, y:i*60+1, width: 60, height: 20)
             self.eventsListDisplay.addSubview(horizontalLine)
+            self.eventsListDisplay.addSubview(hourLabel)
         }
     }
     
@@ -382,10 +386,10 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
 
         let newHeight = topOfFromBlock - topOfBlock
         let splitHeight = bottomOfBlock - topOfBlock - newHeight
-        block.frame = CGRect(x: block.frame.origin.x, y: block.frame.origin.y,  width: 250, height: newHeight)
+        block.frame = CGRect(x: block.frame.origin.x, y: block.frame.origin.y,  width: 230, height: newHeight)
         let splitButton = MyEventButton.init()
         block.updateLabel()
-        splitButton.frame = CGRect(x: block.frame.origin.x, y:bottomOfFromBlock, width: 250, height: splitHeight)
+        splitButton.frame = CGRect(x: block.frame.origin.x, y:bottomOfFromBlock, width: 230, height: splitHeight)
         splitButton.id = block.id
         splitButton.primary = false
         splitButton.title = block.title
