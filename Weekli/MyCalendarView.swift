@@ -96,9 +96,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         let day = calendar.component(.day, from: date)
         let month = calendar.component(.month, from:date)
         
-        self.day = day
-        self.month = month
-        self.year = year
         reloadData(day: day, month: month, year: year)
     }
     
@@ -303,6 +300,9 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     
     
     func reloadData(day: Int, month: Int, year: Int) {
+        self.day = day
+        self.month = month
+        self.year = year
         previousStatesList = []
         undoButton.isEnabled = false
         clearEvents()
