@@ -47,7 +47,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "82"
             endingLineNumber = "82"
-            landmarkName = "passAddEventData(controller:name:date:startHour:startMinute:endHour:endMinute:)"
+            landmarkName = "passEditEventData(controller:buttonList:day:month:year:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -63,7 +63,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "104"
             endingLineNumber = "104"
-            landmarkName = "passAddEventData(controller:name:date:startHour:startMinute:endHour:endMinute:)"
+            landmarkName = "passEditEventData(controller:buttonList:day:month:year:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

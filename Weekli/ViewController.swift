@@ -177,7 +177,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
     
         
     
-        var offsetMinutes: Int { return TimeZone.current.secondsFromGMT() }
+        var offsetMinutes: Int { return TimeZone.current.secondsFromGMT() / 60 }
         print("offset minutes", offsetMinutes)
         if(googleUser?.authentication != nil) {
             print("attempting to add event")
@@ -258,7 +258,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
             query.singleEvents = true
             query.orderBy = kGTLRCalendarOrderByStartTime
             
-            //query.timeZone = Calendar.current.timeZone.identifier
+            query.timeZone = Calendar.current.timeZone.identifier
             service.executeQuery(
                 query,
                 delegate: self,
@@ -281,6 +281,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
         }
         
         if let events = response.items, !events.isEmpty {
+            eventsList.removeAll()
             for event in events {
                 let start = event.start!.dateTime ?? event.start!.date!
                 let startString = DateFormatter.localizedString(
@@ -291,7 +292,9 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
                 compos.insert(.second)
                 compos.insert(.minute)
                 let diff = Calendar.current.dateComponents(compos, from:start.date, to:(event.end!.dateTime?.date)!)
-                print("event id?", event.iCalUID)
+                //print("event id?", event.iCalUID)
+                print("event", event)
+                print("start", start)
                 let timeElapsed = diff.minute!
                 eventsList.add(desc: "\(event.summary!)\n", dateTimeInfo: start.dateComponents,
                                timeElapsed: Int(timeElapsed), day: start.dateComponents.day!, month: start.dateComponents.month!,

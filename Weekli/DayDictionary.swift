@@ -66,4 +66,8 @@ class DayDictionary: NSObject {
             return nil
         }
     }
+    
+    func removeAll() -> Void {
+        dayObjects.removeAll()
+    }
 }

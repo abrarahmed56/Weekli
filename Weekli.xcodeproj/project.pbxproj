@@ -373,9 +373,9 @@
 			children = (
 				5E2E45791FC0C142000E12CF /* AppDelegate.swift */,
 				5E2E457B1FC0C142000E12CF /* ViewController.swift */,
-				5E2E457D1FC0C142000E12CF /* Main.storyboard */,
-				1CE804FF1FDDE838006E3CC4 /* AddEventView.swift */,
 				5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */,
+				1CE804FF1FDDE838006E3CC4 /* AddEventView.swift */,
+				5E2E457D1FC0C142000E12CF /* Main.storyboard */,
 				5EE3116E1FD8C03C00F8BAAA /* DayDictionary.swift */,
 				5EE3116C1FD8BD1100F8BAAA /* DayObject.swift */,
 				5E20CC721FDDF1520084BD5D /* MyEventButton.swift */,
