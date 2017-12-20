@@ -11,7 +11,7 @@ import UIKit
 class DayDictionary: NSObject {
     var dayObjects = [DayObject]()
     func add(desc:String, dateTimeInfo: DateComponents, timeElapsed: Int, day: Int, month: Int, year: Int,
-             hour: Int, minute: Int) {
+             hour: Int, minute: Int, eventID: String) {
         var currentDay = DayObject()
 
         var i = 0
@@ -29,12 +29,12 @@ class DayDictionary: NSObject {
         }
         if ( foundDay ) {
             currentDay.add(todaysEventDateTime: dateTimeInfo, todaysEventsDescription: desc, todaysEventsTimes: timeElapsed,
-                           day: day, month: month, year: year, hour: hour, minute: minute)
+                           day: day, month: month, year: year, hour: hour, minute: minute, eventID: eventID)
         }
         else {
             let addDay = DayObject()
             addDay.initWith(todaysEventDateTime: dateTimeInfo, todaysEventsDescription: desc, todaysEventsTimes: timeElapsed,
-                            day: day, month: month, year: year, hour: hour, minute: minute)
+                            day: day, month: month, year: year, hour: hour, minute: minute, eventID: eventID)
             dayObjects.append(addDay)
         }
     }

@@ -13,6 +13,9 @@ class MyEventButton: MDCRaisedButton {
     // id keeps track of split events which are technically the same event
     var id : Int = 0
     
+    // new keeps track of events created in Weekli vs events imported from Google
+    var new : Bool = false
+    
     // primary keeps track of the first event in a split so the events stay together
     // if a secondary block is moved, the events are separated
     var primary : Bool = true
@@ -22,6 +25,8 @@ class MyEventButton: MDCRaisedButton {
     var fixed : Int = 0
     
     var title: String = ""
+    
+    var googleEventID : String = ""
     
     func myCopy() -> MyEventButton {
         let button = self

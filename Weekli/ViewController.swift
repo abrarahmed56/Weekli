@@ -45,6 +45,96 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
         }
     }
     
+    func passEditEventData(controller: MyCalendarView, buttonList: [MyEventButton], day: Int, month: Int, year: Int) {
+        for button in buttonList {
+            //if ( button.new ) {
+                let startHour = Int(button.frame.origin.y / 60)
+                let startMinute = Int(button.frame.origin.y) - (startHour*60)
+                let endHour = Int((button.frame.origin.y + button.bounds.height) / 60)
+                let endMinute = Int(button.frame.origin.y + button.bounds.height) - (endHour*60)
+                //print(startHour)
+                //print(startMinute)
+                //print(endHour)
+                //print(endMinute)
+                
+                var startComponents = DateComponents()
+                startComponents.day = day
+                startComponents.month = month
+                startComponents.year = year
+                startComponents.hour = startHour
+                startComponents.minute = startMinute
+                
+                var endComponents = DateComponents()
+                endComponents.day = day
+                endComponents.month = month
+                endComponents.year = year
+                endComponents.hour = endHour
+                endComponents.minute = endMinute
+                
+                let userCalendar = Calendar.current
+                let startTimeObject = userCalendar.date(from: startComponents)
+                let endTimeObject = userCalendar.date(from: endComponents)
+                let googleUser = GIDSignIn.sharedInstance().currentUser
+                
+                if ( googleUser?.authentication != nil) {
+                    print("adding event")
+                    print(button.title)
+                    let newEvent: GTLRCalendar_Event = GTLRCalendar_Event()
+                    newEvent.summary = button.title
+                    
+                    //set GTLRDateTimes
+                    let startTime: GTLRDateTime = GTLRDateTime(date: startTimeObject!)
+                    let googleStartTime = GTLRCalendar_EventDateTime.init()
+                    googleStartTime.dateTime = startTime
+                    
+                    let endTime: GTLRDateTime = GTLRDateTime(date: endTimeObject!)
+                    let googleEndTime = GTLRCalendar_EventDateTime.init()
+                    googleEndTime.dateTime = endTime
+                    
+                    newEvent.start = googleStartTime
+                    newEvent.end = googleEndTime
+                    
+                    let service: GTLRCalendarService = GTLRCalendarService()
+
+                    if ( button.new ) {
+                    let query:GTLRCalendarQuery_EventsInsert = GTLRCalendarQuery_EventsInsert.query(withObject: newEvent, calendarId:"primary")
+
+                    service.authorizer = googleUser!.authentication.fetcherAuthorizer()
+                    service.executeQuery(query, completionHandler: {(ticket:GTLRServiceTicket?, object: Any?, error: Error?)->Void in
+                        print("executed query")
+                        if error == nil {
+                            print("added")
+                        }
+                        else {
+                            print("add failed")
+                            print(error)
+                        }
+                        
+                        } as? GTLRServiceCompletionHandler)
+                    }
+                    else {
+                        print("else")
+                        let query:GTLRCalendarQuery_EventsPatch = GTLRCalendarQuery_EventsPatch.query(withObject: newEvent, calendarId: "primary", eventId: button.googleEventID)
+                        service.authorizer = googleUser!.authentication.fetcherAuthorizer()
+                        service.executeQuery(query, completionHandler: {(ticket: GTLRServiceTicket?, object: Any?, error: Error?) -> Void in
+                            print("executed query")
+                            if ( error == nil ) {
+                                print("updated")
+                            }
+                            else {
+                                print("update failed")
+                                print(error)
+                            }
+                        } as? GTLRServiceCompletionHandler)
+                    }
+                }
+            //}
+            //else {
+                
+            //}
+        }
+    }
+    
     func passAddEventData(controller: MyCalendarView, name: String, date: String, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int) {
         print("data from view controller delegate")
         var dateArr = date.components(separatedBy: " ")[0].components(separatedBy: "-")
@@ -55,7 +145,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
         //print(date.components(separatedBy: " "))
         //print("date:", dateArr[0].components(separatedBy: "-"))
         
-        //Set date objects for start ande nd
+        //Set date objects for start and end
         var startComponents = DateComponents()
         startComponents.day = day
         startComponents.month = month
@@ -93,7 +183,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
             print("attempting to add event")
             let newEvent: GTLRCalendar_Event = GTLRCalendar_Event()
             newEvent.summary = name
-            //newEvent.descriptionProperty = "blah"
+
             //set GTLRDateTimes
             //let startTime: GTLRDateTime = GTLRDateTime(date:startTimeObject!, offsetMinutes: offsetMinutes)
             let startTime: GTLRDateTime = GTLRDateTime(date: startTimeObject!)
@@ -117,14 +207,10 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
             //service.authorizer = googleUser!.authentication as! GTMFetcherAuthorizationProtocol
                 //GTMFetcherAuthorizationProtocol
             service.authorizer = googleUser!.authentication.fetcherAuthorizer()
-            print("got here")
             service.executeQuery(query, completionHandler: {(ticket:GTLRServiceTicket?, object: Any?, error: Error?)->Void in
                 print("executed query")
                 if error == nil {
                     print("added")
-                    print(newEvent.summary)
-                    print(newEvent.start?.description)
-                    print(newEvent.end?.description)
                 }
                 else {
                     print("add failed")
@@ -171,7 +257,8 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
             query.timeMin = GTLRDateTime(date: Date())
             query.singleEvents = true
             query.orderBy = kGTLRCalendarOrderByStartTime
-            query.timeZone = "EST"
+            
+            //query.timeZone = Calendar.current.timeZone.identifier
             service.executeQuery(
                 query,
                 delegate: self,
@@ -204,10 +291,11 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
                 compos.insert(.second)
                 compos.insert(.minute)
                 let diff = Calendar.current.dateComponents(compos, from:start.date, to:(event.end!.dateTime?.date)!)
+                print("event id?", event.iCalUID)
                 let timeElapsed = diff.minute!
-                eventsList.add(desc: /*"\(startString) - */"\(event.summary!)\n", dateTimeInfo: start.dateComponents,
+                eventsList.add(desc: "\(event.summary!)\n", dateTimeInfo: start.dateComponents,
                                timeElapsed: Int(timeElapsed), day: start.dateComponents.day!, month: start.dateComponents.month!,
-                               year: start.dateComponents.year!, hour: start.dateComponents.hour!, minute: start.dateComponents.minute!)
+                               year: start.dateComponents.year!, hour: start.dateComponents.hour!, minute: start.dateComponents.minute!, eventID: event.identifier!)
             }
         }
         

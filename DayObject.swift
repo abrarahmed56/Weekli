@@ -16,9 +16,10 @@ class DayObject: NSObject {
     var todaysEventsDateTimes : [DateComponents] = []
     var todaysEventsDescriptions : [String] = []
     var todaysEventsTimeElapsed : [Int] = []
+    var todaysEventIDs : [String] = []
     private var numEvents = 0
     func initWith(todaysEventDateTime:DateComponents, todaysEventsDescription: String, todaysEventsTimes: Int,
-                  day: Int, month: Int, year: Int, hour: Int, minute: Int) {
+                  day: Int, month: Int, year: Int, hour: Int, minute: Int, eventID: String) {
         todaysEventsDateTimes = [todaysEventDateTime]
         todaysEventsDescriptions = [todaysEventsDescription]
         todaysEventsTimeElapsed = [todaysEventsTimes]
@@ -29,9 +30,10 @@ class DayObject: NSObject {
         todaysYear = year
         todaysDay = day
         numEvents = 1
+        todaysEventIDs = [eventID]
     }
     func add(todaysEventDateTime: DateComponents, todaysEventsDescription: String, todaysEventsTimes: Int,
-             day: Int, month: Int, year: Int, hour: Int, minute: Int) {
+             day: Int, month: Int, year: Int, hour: Int, minute: Int, eventID: String) {
         todaysDay = day
         todaysMonth = month
         todaysYear = year
@@ -39,6 +41,7 @@ class DayObject: NSObject {
         todaysEventsDescriptions.append(todaysEventsDescription)
         todaysEventsTimeElapsed.append(todaysEventsTimes)
         numEvents = numEvents + 1
+        todaysEventIDs.append(eventID)
     }
     func getNumEvents() -> Int {
         return numEvents
@@ -48,5 +51,8 @@ class DayObject: NSObject {
     }
     func getDescription(i:Int) -> String {
         return todaysEventsDescriptions[i]
+    }
+    func getEventID(i:Int) -> String {
+        return todaysEventIDs[i]
     }
 }

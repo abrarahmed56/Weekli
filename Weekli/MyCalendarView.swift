@@ -11,6 +11,7 @@ import JTAppleCalendar
 
 protocol myCalendarViewDelegate: class {
     func passAddEventData(controller: MyCalendarView, name: String, date: String, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int)
+    func passEditEventData(controller: MyCalendarView, buttonList: [MyEventButton], day: Int, month: Int, year: Int)
 }
 
 class MyCalendarView: UIViewController, AddEventViewDelegate {
@@ -42,6 +43,9 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     var blockSplitsOtherBlocks : [MyEventButton] = []
     var hasBeenEdited = false
     var addBlockView : UIView? = nil
+    var day: Int = 0
+    var month: Int = 0
+    var year: Int = 0
 
 
     override func viewDidLoad() {
@@ -70,6 +74,11 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         
     }
     
+    @IBAction func save(_ sender: Any) {
+        print("save")
+        delegate?.passEditEventData(controller: self, buttonList: buttonList, day: day, month: month, year: year)
+    }
+    
     func passEventData(controller: AddEventView, name: String, date: String, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int) {
         delegate?.passAddEventData(controller: self, name: name, date: date, startHour: startHour, startMinute: startMinute, endHour: endHour, endMinute: endMinute)
     }
@@ -87,6 +96,9 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         let day = calendar.component(.day, from: date)
         let month = calendar.component(.month, from:date)
         
+        self.day = day
+        self.month = month
+        self.year = year
         reloadData(day: day, month: month, year: year)
     }
     
@@ -317,6 +329,8 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                 raiseButton.frame.origin.y = CGFloat(beginAtHeight)
                 raiseButton.id = Int(arc4random())
                 raiseButton.title = thisDate!.todaysEventsDescriptions[j]
+                raiseButton.new = false
+                raiseButton.googleEventID = thisDate!.getEventID(i: j)
                 addPanGestureRecognizer(button: raiseButton)
                 let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
                 raiseButton.addGestureRecognizer(tapGesture)
@@ -345,6 +359,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                 subview.removeFromSuperview()
             }
         }
+        buttonList.removeAll()
         addHorizontalHourIndicators()
     }
     
