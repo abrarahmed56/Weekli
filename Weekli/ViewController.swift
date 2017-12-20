@@ -47,19 +47,26 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
     
     func passAddEventData(controller: MyCalendarView, name: String, date: String, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int) {
         print("data from view controller delegate")
-        var dateArr = date.components(separatedBy: " ")
-        var day:Int? = Int(dateArr[0])
+        var dateArr = date.components(separatedBy: " ")[0].components(separatedBy: "-")
+        var day:Int? = Int(dateArr[2])
         var month:Int? = Int(dateArr[1])
-        var year:Int? = Int(dateArr[2])
+        var year:Int? = Int(dateArr[0])
+        
+        //print(date.components(separatedBy: " "))
+        //print("date:", dateArr[0].components(separatedBy: "-"))
         
         //Set date objects for start ande nd
         var startComponents = DateComponents()
-        // startComponents.date = date
         startComponents.day = day
         startComponents.month = month
         startComponents.year = year
         startComponents.hour = startHour
         startComponents.minute = startMinute
+        print(startComponents.day!)
+        print(startComponents.month!)
+        print(startComponents.year!)
+        print(startComponents.hour!)
+        print(startComponents.minute!)
         var endComponents = DateComponents()
         // startComponenets.date = date
         endComponents.day = day
