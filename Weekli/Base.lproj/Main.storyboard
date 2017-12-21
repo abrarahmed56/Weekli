@@ -220,6 +220,7 @@
                                             </connections>
                                         </button>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="8Wc-vH-QWa"/>
                                     <barButtonItem title="Add Block" id="UpM-eW-hPz">
                                         <connections>
                                             <action selector="addBlock:" destination="Hte-Nt-GoS" id="faI-ES-jcS"/>
@@ -231,12 +232,6 @@
                                             <action selector="save:" destination="Hte-Nt-GoS" id="HDZ-7C-LtB"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Post" id="mgO-f6-Sox">
-                                        <connections>
-                                            <action selector="post:" destination="Hte-Nt-GoS" id="tkl-qO-g8k"/>
-                                            <segue destination="vdP-8J-Sdk" kind="show" id="2ik-ge-Sdk"/>
-                                        </connections>
-                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -244,7 +239,6 @@
                     </view>
                     <connections>
                         <outlet property="EventsListDisplay" destination="pWD-cu-Lvp" id="FMj-ie-ENp"/>
-                        <outlet property="barButtonPost" destination="mgO-f6-Sox" id="rHh-HN-YKO"/>
                         <outlet property="calendarView" destination="CV2-gu-Xvx" id="9Go-9d-oQf"/>
                         <outlet property="undoButton" destination="J9O-K6-iOo" id="4FO-FG-WyJ"/>
                     </connections>

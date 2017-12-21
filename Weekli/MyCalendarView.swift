@@ -55,17 +55,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate, EditEventDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
-            let serverObjects = self.getServerEvents()
-            for (date, event) in serverObjects {
-                let stringDate = self.formatter.string(from: date)
-                self.eventsFromTheServer[stringDate] = event
-            }
-            DispatchQueue.main.async {
-                //self.calendarView.reloadData()
-            }
-        }
-        
         setUpCalendarView()
         calendarView.scrollToDate( Date() )
         calendarView.selectDates([ Date() ])
@@ -96,10 +85,6 @@ class MyCalendarView: UIViewController, AddEventViewDelegate, EditEventDelegate,
             }
         }
     }
-    
-//    func passDeleteEventData(controller: EditEventPopupView, eventID: String) {
-
-//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -612,23 +597,3 @@ extension MyCalendarView: JTAppleCalendarViewDataSource {
 
 
 
-
-
-
-
-
-
-extension MyCalendarView {
-    func getServerEvents() -> [Date:String] {
-        formatter.dateFormat = "yyyy MM dd"
-        return [
-            formatter.date(from: "2017 12 07")!: "Happy Birthday",
-            formatter.date(from: "2017 12 09")!: "Suffering",
-            formatter.date(from: "2017 12 10")!: "Pain",
-            formatter.date(from: "2017 12 05")!: "Where is Abrar",
-            formatter.date(from: "2017 12 02")!: "I need him now",
-            formatter.date(from: "2017 12 01")!: "Got it",
-            
-        ]
-    }
-}
