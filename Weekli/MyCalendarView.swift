@@ -15,8 +15,7 @@ protocol myCalendarViewDelegate: class {
     func passDeleteData(controller: MyCalendarView, eventID: String)
 }
 
-class MyCalendarView: UIViewController, AddEventViewDelegate, EditEventDelegate {
-    
+class MyCalendarView: UIViewController, AddEventViewDelegate, EditEventDelegate, AddBlockDelegate {
 
     
     let formatter: DateFormatter = {
@@ -50,6 +49,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate, EditEventDelegate 
     var month: Int = 0
     var year: Int = 0
     var deleteEventID: String = ""
+    var newButton : MyEventButton? = nil
 
 
     override func viewDidLoad() {
@@ -251,7 +251,15 @@ class MyCalendarView: UIViewController, AddEventViewDelegate, EditEventDelegate 
         }
     }
     
-
+    @IBAction func handleNew(recognizer: UIPanGestureRecognizer) {
+        if ( recognizer.state == .began ) {
+            addBlockView?.removeFromSuperview()
+            self.eventsListDisplay.isScrollEnabled = true
+        }
+        if ( recognizer.state == .ended && newButton != nil) {
+            buttonList.append(newButton!)
+        }
+    }
     
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
@@ -266,10 +274,18 @@ class MyCalendarView: UIViewController, AddEventViewDelegate, EditEventDelegate 
         if ( recognizer.state == .ended ) {
             if let view = recognizer.view {
                 editTimeOfEvent(view: view)
+                if ( newButton != nil ) {
+                    buttonList.append(newButton!)
+                    newButton = nil
+                }
             }
         }
         if ( recognizer.state == .began) {
             previousStatesList.append(copyOfList(bList: buttonList))
+            if ( addBlockView != nil ) {
+                addBlockView?.removeFromSuperview()
+                self.eventsListDisplay.isScrollEnabled = true
+            }
         }
         recognizer.setTranslation(CGPoint.zero, in: self.view)
     }
@@ -462,19 +478,43 @@ class MyCalendarView: UIViewController, AddEventViewDelegate, EditEventDelegate 
         button.addGestureRecognizer(panGesture)
     }
     
-    func addBlockToCalendar(/*_ sender: Any, name: String, numHours: Int, numMinutes: Int*/) {
-        print("addblocktocalendar")
-        //self.addBlockView.
-        //print(sender.int)
-        //print(numHours)
-        //print(numMinutes)
+    func addNewBlockMovedRecognizer(button: MyEventButton) {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handleNew(recognizer:)))
+        button.addGestureRecognizer(panGesture)
+    }
+    
+    
+    func addBlockToCalendar(name: String, numHours: Int, numMinutes: Int) {
+        print(name)
+        print(numHours)
+        print(numMinutes)
+        let raiseButton = MyEventButton.init();
+        let height = numHours * 60 + numMinutes
+        raiseButton.frame = CGRect(x:0, y:130, width: 250, height: height)
+        raiseButton.backgroundColor = getRandomColor()
+        raiseButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+        raiseButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
+        raiseButton.frame = CGRect(x: 0, y: 0, width: 230, height: height)
+        raiseButton.id = Int(arc4random())
+        raiseButton.title = name
+        raiseButton.updateLabel()
+        raiseButton.new = true
+
+        newButton = raiseButton
+        //addNewBlockMovedRecognizer(button: raiseButton)
+        addPanGestureRecognizer(button: raiseButton)
+        self.eventsListDisplay.addSubview(raiseButton)
+
     }
     
     @IBAction func addBlock(_ sender: Any) {
         print("Add block")
         let addBlockView = AddBlockView.init()
+        addBlockView.delegate = self
         self.addBlockView = addBlockView
-        self.view.addSubview(addBlockView)
+        self.eventsListDisplay.addSubview(addBlockView)
+        addBlockView.frame = CGRect(x: addBlockView.frame.origin.x, y: addBlockView.frame.origin.y + self.eventsListDisplay.contentOffset.y, width: addBlockView.bounds.width, height: addBlockView.bounds.height)
+        self.eventsListDisplay.isScrollEnabled = false
     }
     
     func closeAddingBlockView() {
