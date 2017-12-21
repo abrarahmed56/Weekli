@@ -12,9 +12,12 @@ import JTAppleCalendar
 protocol myCalendarViewDelegate: class {
     func passAddEventData(controller: MyCalendarView, name: String, date: String, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int)
     func passEditEventData(controller: MyCalendarView, buttonList: [MyEventButton], day: Int, month: Int, year: Int)
+    func passDeleteData(controller: MyCalendarView, eventID: String)
 }
 
-class MyCalendarView: UIViewController, AddEventViewDelegate {
+class MyCalendarView: UIViewController, AddEventViewDelegate, EditEventDelegate {
+    
+
     
     let formatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -46,6 +49,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     var day: Int = 0
     var month: Int = 0
     var year: Int = 0
+    var deleteEventID: String = ""
 
 
     override func viewDidLoad() {
@@ -82,6 +86,16 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
     func passEventData(controller: AddEventView, name: String, date: String, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int) {
         delegate?.passAddEventData(controller: self, name: name, date: date, startHour: startHour, startMinute: startMinute, endHour: endHour, endMinute: endMinute)
     }
+    
+    func passDeleteEventData(controller: EditEventPopupView, eventID: String) {
+        delegate?.passDeleteData(controller: self, eventID: eventID)
+        print("deleteEventID from calendarview", deleteEventID)
+    }
+    
+//    func passDeleteEventData(controller: EditEventPopupView, eventID: String) {
+
+//    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let addEventView: AddEventView = segue.destination as! AddEventView
@@ -260,13 +274,19 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
         recognizer.setTranslation(CGPoint.zero, in: self.view)
     }
     
-    @IBAction func handleTap(recognizer:UITapGestureRecognizer) {
-        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editEventPopupID") as! EditEventPopupView
-        self.addChildViewController(popOverVC)
-        popOverVC.view.frame = self.view.frame
-        self.view.addSubview(popOverVC.view)
-        popOverVC.didMove(toParentViewController: self)
-        print("Open menu")
+    func tapped(gestureRecognizer: EventTapGestureRecognizer) {
+        if let eventID = gestureRecognizer.eventID {
+            print("tapped eventID", eventID)
+            let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editEventPopupID") as! EditEventPopupView
+            popOverVC.targetEventID = eventID
+            popOverVC.delegate = self
+            deleteEventID = eventID
+            self.addChildViewController(popOverVC)
+            popOverVC.view.frame = self.view.frame
+            self.view.addSubview(popOverVC.view)
+            popOverVC.didMove(toParentViewController: self)
+            print("Open menu")
+        }
     }
     
 
@@ -333,8 +353,11 @@ class MyCalendarView: UIViewController, AddEventViewDelegate {
                 raiseButton.title = thisDate!.todaysEventsDescriptions[j]
                 raiseButton.new = false
                 raiseButton.googleEventID = thisDate!.getEventID(i: j)
+                print("googleEventID", raiseButton.googleEventID)
                 addPanGestureRecognizer(button: raiseButton)
-                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
+//             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
+                let tapGesture = EventTapGestureRecognizer(target: self, action: #selector(tapped(gestureRecognizer:)))
+                tapGesture.eventID = raiseButton.googleEventID
                 raiseButton.addGestureRecognizer(tapGesture)
                 buttonList.append(raiseButton)
 
