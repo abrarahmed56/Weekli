@@ -464,6 +464,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate, EditEventDelegate,
         splitButton.updateLabel()
         splitButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         splitButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
+        splitButton.new = true
         
         addPanGestureRecognizer(button: splitButton)
         
@@ -494,7 +495,7 @@ class MyCalendarView: UIViewController, AddEventViewDelegate, EditEventDelegate,
         raiseButton.backgroundColor = getRandomColor()
         raiseButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         raiseButton.titleLabel?.font = UIFont(name: "Arial", size: 10)
-        raiseButton.frame = CGRect(x: 0, y: 0, width: 230, height: height)
+        raiseButton.frame = CGRect(x: 0, y: Int(eventsListDisplay.contentOffset.y), width: 230, height: height)
         raiseButton.id = Int(arc4random())
         raiseButton.title = name
         raiseButton.updateLabel()
