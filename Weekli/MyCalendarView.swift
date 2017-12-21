@@ -90,6 +90,11 @@ class MyCalendarView: UIViewController, AddEventViewDelegate, EditEventDelegate,
     func passDeleteEventData(controller: EditEventPopupView, eventID: String) {
         delegate?.passDeleteData(controller: self, eventID: eventID)
         print("deleteEventID from calendarview", deleteEventID)
+        for button in buttonList {
+            if ( button.googleEventID == deleteEventID ) {
+                button.removeFromSuperview()
+            }
+        }
     }
     
 //    func passDeleteEventData(controller: EditEventPopupView, eventID: String) {
