@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Weekli/ViewController.swift"
-            timestampString = "535413710.762021"
+            timestampString = "535512146.640489"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "passEditEventData(controller:buttonList:day:month:year:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Weekli/ViewController.swift"
-            timestampString = "535413710.762021"
+            timestampString = "535512146.640489"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
             landmarkName = "passEditEventData(controller:buttonList:day:month:year:)"
             landmarkType = "7">
          </BreakpointContent>

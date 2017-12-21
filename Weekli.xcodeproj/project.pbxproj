@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1CAEF4221FDB86E000D52514 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAEF4211FDB86E000D52514 /* CustomCell.swift */; };
 		1CD458ED1FEB146F00890684 /* EditEventPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD458EC1FEB146F00890684 /* EditEventPopupView.swift */; };
+		1CD458EF1FEB28B000890684 /* EventTapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD458EE1FEB28B000890684 /* EventTapGestureRecognizer.swift */; };
 		1CE805001FDDE838006E3CC4 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE804FF1FDDE838006E3CC4 /* AddEventView.swift */; };
 		5E0530DD1FC4EC5900E8BC67 /* MyCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */; };
 		5E1691D11FC2465900135810 /* google-api-objectivec-client-for-rest-master in Resources */ = {isa = PBXBuildFile; fileRef = 5E1691D01FC2465900135810 /* google-api-objectivec-client-for-rest-master */; };
@@ -90,6 +91,7 @@
 /* Begin PBXFileReference section */
 		1CAEF4211FDB86E000D52514 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		1CD458EC1FEB146F00890684 /* EditEventPopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditEventPopupView.swift; sourceTree = "<group>"; };
+		1CD458EE1FEB28B000890684 /* EventTapGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTapGestureRecognizer.swift; sourceTree = "<group>"; };
 		1CE804FF1FDDE838006E3CC4 /* AddEventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
 		313B55B0743FCC270906699B /* Pods_WeekliUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeekliUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E0530DC1FC4EC5900E8BC67 /* MyCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCalendarView.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				5E2E45851FC0C142000E12CF /* Info.plist */,
 				5E2E45F31FC0C413000E12CF /* Weekli-Bridging-Header.h */,
 				1CAEF4211FDB86E000D52514 /* CustomCell.swift */,
+				1CD458EE1FEB28B000890684 /* EventTapGestureRecognizer.swift */,
 			);
 			path = Weekli;
 			sourceTree = "<group>";
@@ -763,6 +766,7 @@
 				5EAEFB181FC3B6B70008F6BF /* GTLRFramework.m in Sources */,
 				5EAEFB1A1FC3B6B70008F6BF /* GTLRUtilities.m in Sources */,
 				5E4845B91FCF6F0500262DE0 /* UIApplication+AppExtensions.m in Sources */,
+				1CD458EF1FEB28B000890684 /* EventTapGestureRecognizer.swift in Sources */,
 				5E4845851FCF6A0E00262DE0 /* MDCFloatingButton.m in Sources */,
 				5EAEFB0C1FC3B6980008F6BF /* GTLRRuntimeCommon.m in Sources */,
 				5EE3116F1FD8C03C00F8BAAA /* DayDictionary.swift in Sources */,

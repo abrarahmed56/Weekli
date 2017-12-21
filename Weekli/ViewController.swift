@@ -45,6 +45,29 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
         }
     }
     
+    func passDeleteData(controller: MyCalendarView, eventID: String) {
+        print("eventID in ViewController", eventID)
+        
+        let googleUser = GIDSignIn.sharedInstance().currentUser
+        let service: GTLRCalendarService = GTLRCalendarService()
+        if(googleUser?.authentication != nil) {
+            let query:GTLRCalendarQuery_EventsDelete = GTLRCalendarQuery_EventsDelete.query(withCalendarId: "primary", eventId: eventID)
+            service.authorizer = googleUser!.authentication.fetcherAuthorizer()
+            service.executeQuery(query, completionHandler: {(ticket:GTLRServiceTicket?, object: Any?, error: Error?)->Void in
+                print("executed query")
+                if error == nil {
+                    print("deleted")
+                }
+                else {
+                    print("add failed")
+                    print(error)
+                }
+                
+                } as? GTLRServiceCompletionHandler)
+        }
+        
+    }
+    
     func passEditEventData(controller: MyCalendarView, buttonList: [MyEventButton], day: Int, month: Int, year: Int) {
         for button in buttonList {
             //if ( button.new ) {
