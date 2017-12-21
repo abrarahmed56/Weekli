@@ -31,7 +31,6 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, 
         GIDSignIn.sharedInstance().scopes = scopes
         GIDSignIn.sharedInstance().signInSilently()
         
-        
     }
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
